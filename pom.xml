@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.mizhousoft</groupId>
+		<artifactId>mizhousoft</artifactId>
+		<version>1.0.5</version>
+	</parent>
+
+	<groupId>com.mizhousoft.commons</groupId>
+	<artifactId>commons-parent</artifactId>
+	<version>1.0.1</version>
+	<packaging>pom</packaging>
+	<name>commons-parent</name>
+	<description>Mizhousoft Common Component</description>
+
+	<properties>
+		<commons.version>1.0.1</commons.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+		</dependency>
+	</dependencies>
+
+	<modules>
+		<module>commons-data</module>
+		<module>commons-lang</module>
+		<module>commons-json</module>
+		<module>commons-crypto</module>
+		<module>commons-io</module>
+		<module>commons-context</module>
+		<module>commons-thread</module>
+		<module>commons-mapper</module>
+		<module>commons-web</module>
+		<module>commons-restclient</module>
+		<module>commons-download</module>
+		<module>commons-qrcode</module>
+		<module>commons-mail</module>
+		<module>commons-okhttp-digest</module>
+		<module>mizhousoft-commons</module>
+	</modules>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
