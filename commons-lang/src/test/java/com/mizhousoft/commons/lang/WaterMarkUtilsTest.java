@@ -22,7 +22,7 @@ public class WaterMarkUtilsTest
 			String destPath = "C:\\\\work\\\\test1.jpg";
 			Font font = new Font("宋体", Font.PLAIN, 80);
 			Color color = Color.red;
-			String text = "仅用于转让米舟科技商标至深圳米舟科技有限公司";
+			String text = "仅用于";
 			int coordX = 600;
 			int coordY = 100;
 			Integer degree = 120;
@@ -60,7 +60,7 @@ public class WaterMarkUtilsTest
 			String destPath = "C:\\\\work\\\\card-z-1.jpg";
 			Font font = new Font("宋体", Font.PLAIN, 80);
 			Color color = Color.red;
-			String text = "仅用于申请微信开放平台";
+			String text = "仅用于";
 			int coordX = 140;
 			int coordY = 500;
 			Integer degree = 30;
@@ -97,7 +97,7 @@ public class WaterMarkUtilsTest
 			String destPath = "C:\\\\work\\\\card-f-1.jpg";
 			Font font = new Font("宋体", Font.PLAIN, 80);
 			Color color = Color.red;
-			String text = "仅用于申请微信开放平台";
+			String text = "仅用于";
 			int coordX = 140;
 			int coordY = 500;
 			Integer degree = 30;

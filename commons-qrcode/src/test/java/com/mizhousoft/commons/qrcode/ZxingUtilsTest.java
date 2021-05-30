@@ -14,7 +14,7 @@ public class ZxingUtilsTest
 		String logoPath = ZxingUtilsTest.class.getClassLoader().getResource("logo.png").getFile();
 		String imgPath = ZxingUtilsTest.class.getClassLoader().getResource("poster.jpg").getFile();
 
-		String content = "https://dev.mizhousoft.com/mpapi/spread/index.action?userId=74";
+		String content = "";
 		QrcodeParam codeParam = new QrcodeLogoParam(content, logoPath);
 
 		File file = new File(logoPath);
