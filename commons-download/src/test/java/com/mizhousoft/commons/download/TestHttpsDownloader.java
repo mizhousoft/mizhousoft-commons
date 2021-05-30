@@ -10,14 +10,9 @@ import java.security.KeyStore;
  */
 public class TestHttpsDownloader
 {
-	/**
-	 * 
-	 * @param args
-	 * @throws Exception
-	 */
 	public static void main(String[] args) throws Exception
 	{
-		String url = "https://localhost:18243/ums/upload/test.zip";
+		String url = "";
 		String localFilePath = "E:\\test.zip";
 
 		KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());

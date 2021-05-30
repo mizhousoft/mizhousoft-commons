@@ -23,7 +23,7 @@ import com.mizhousoft.commons.mail.MailService;
 @SpringBootTest(classes = BootApplication.class)
 public class TestMailServiceImpl
 {
-	private String[] to = { "306540206@qq.com" };
+	private String[] to = {};
 
 	@Autowired
 	private JavaMailSender mailSender;
