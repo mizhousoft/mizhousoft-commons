@@ -4,7 +4,7 @@
 
 
 #  只更新父模块的版本号
-mvn versions:set -DnewVersion=1.0.2-SNAPSHOT
+mvn versions:set -DnewVersion=1.1.0-SNAPSHOT
 
 # 更新子模块和父模块一样的版本号
 mvn -N versions:update-child-modules 
