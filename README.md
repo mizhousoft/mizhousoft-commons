@@ -28,3 +28,18 @@
 	```shell
 	mvn clean deploy -Possrh
 	```
+
+#####  根据Tag创建新分支
+
+1. 获取最新代码，执行下面命令，或其他均可；
+	git pull
+
+2. 根据tag创建新的分支
+	git branch <new-branch-name> <tag-name>
+	
+3. 切换到新的分支
+	git checkout <new-branch-name>
+	
+	
+4. 把本地创建的分支提交到远程仓库
+	git push origin <new-branch-name>
