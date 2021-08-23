@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
@@ -17,12 +19,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
 import com.mizhousoft.commons.lang.CharEncoding;
@@ -38,7 +42,7 @@ public class HttpRestClientServiceImpl implements RestClientService
 {
 	private static final Logger LOG = LoggerFactory.getLogger(HttpRestClientServiceImpl.class);
 
-	private RestTemplate restTemplate;
+	protected RestTemplate restTemplate;
 
 	/**
 	 * {@inheritDoc}
@@ -49,6 +53,48 @@ public class HttpRestClientServiceImpl implements RestClientService
 		try
 		{
 			return restTemplate.getForObject(url, responseType);
+		}
+		catch (RestClientResponseException e)
+		{
+			throw new RestException(e.getRawStatusCode(), e.getResponseBodyAsString(), e.getMessage(), e);
+		}
+		catch (Throwable e)
+		{
+			throw new RestException(e.getMessage(), e);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <T> T getForObject(String url, Map<String, String> headerMap, Class<T> responseType) throws RestException
+	{
+		try
+		{
+			HttpHeaders headers = new HttpHeaders();
+			if (null != headerMap)
+			{
+				Iterator<Entry<String, String>> iter = headerMap.entrySet().iterator();
+				while (iter.hasNext())
+				{
+					Entry<String, String> entry = iter.next();
+					headers.set(entry.getKey(), entry.getValue());
+				}
+			}
+
+			HttpEntity<?> request = new HttpEntity<>(headers);
+			ResponseEntity<T> response = restTemplate.exchange(url, HttpMethod.GET, request, responseType);
+			if (!response.getStatusCode().equals(HttpStatus.OK))
+			{
+				throw new RestException(response.getStatusCodeValue(), response.getBody().toString(), null, null);
+			}
+
+			return response.getBody();
+		}
+		catch (RestClientResponseException e)
+		{
+			throw new RestException(e.getRawStatusCode(), e.getResponseBodyAsString(), e.getMessage(), e);
 		}
 		catch (Throwable e)
 		{
@@ -65,6 +111,10 @@ public class HttpRestClientServiceImpl implements RestClientService
 		try
 		{
 			return restTemplate.postForObject(url, request, responseType);
+		}
+		catch (RestClientResponseException e)
+		{
+			throw new RestException(e.getRawStatusCode(), e.getResponseBodyAsString(), e.getMessage(), e);
 		}
 		catch (Throwable e)
 		{
@@ -83,11 +133,16 @@ public class HttpRestClientServiceImpl implements RestClientService
 			ResponseEntity<Resource> entity = restTemplate.getForEntity(url, Resource.class);
 			if (!entity.getStatusCode().equals(HttpStatus.OK))
 			{
-				throw new RestException("Download failed, status code is " + entity.getStatusCodeValue() + '.');
+				throw new RestException(entity.getStatusCodeValue(), null,
+				        "Download failed, status code is " + entity.getStatusCodeValue() + '.', null);
 			}
 
 			InputStream istream = entity.getBody().getInputStream();
 			return istream;
+		}
+		catch (RestClientResponseException e)
+		{
+			throw new RestException(e.getRawStatusCode(), e.getResponseBodyAsString(), e.getMessage(), e);
 		}
 		catch (Throwable e)
 		{
@@ -106,11 +161,16 @@ public class HttpRestClientServiceImpl implements RestClientService
 			ResponseEntity<Resource> entity = restTemplate.postForEntity(url, request, Resource.class);
 			if (!entity.getStatusCode().equals(HttpStatus.OK))
 			{
-				throw new RestException("Download failed, status code is " + entity.getStatusCodeValue() + '.');
+				throw new RestException(entity.getStatusCodeValue(), null,
+				        "Download failed, status code is " + entity.getStatusCodeValue() + '.', null);
 			}
 
 			InputStream istream = entity.getBody().getInputStream();
 			return istream;
+		}
+		catch (RestClientResponseException e)
+		{
+			throw new RestException(e.getRawStatusCode(), e.getResponseBodyAsString(), e.getMessage(), e);
 		}
 		catch (Throwable e)
 		{
@@ -127,6 +187,10 @@ public class HttpRestClientServiceImpl implements RestClientService
 		try
 		{
 			restTemplate.delete(url);
+		}
+		catch (RestClientResponseException e)
+		{
+			throw new RestException(e.getRawStatusCode(), e.getResponseBodyAsString(), e.getMessage(), e);
 		}
 		catch (Throwable e)
 		{
@@ -186,7 +250,7 @@ public class HttpRestClientServiceImpl implements RestClientService
 		}
 		catch (Throwable e)
 		{
-			throw new RestException("Init restclient service failed.", e);
+			throw new RuntimeException("Init restclient service failed.", e);
 		}
 	}
 
@@ -194,9 +258,8 @@ public class HttpRestClientServiceImpl implements RestClientService
 	 * 创建HttpClient
 	 * 
 	 * @return
-	 * @throws RestException
 	 */
-	public CloseableHttpClient createHttpClient() throws RestException
+	public CloseableHttpClient createHttpClient()
 	{
 		try
 		{
@@ -213,13 +276,9 @@ public class HttpRestClientServiceImpl implements RestClientService
 			CloseableHttpClient client = builder.build();
 			return client;
 		}
-		catch (RestException e)
-		{
-			throw e;
-		}
 		catch (Throwable e)
 		{
-			throw new RestException("Build httpClient failed.", e);
+			throw new RuntimeException("Build httpClient failed.", e);
 		}
 	}
 

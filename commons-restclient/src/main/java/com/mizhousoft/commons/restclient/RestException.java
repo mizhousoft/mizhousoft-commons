@@ -11,52 +11,26 @@ public class RestException extends NestedRuntimeException
 {
 	private static final long serialVersionUID = -4310073232484042915L;
 
+	// 状态码
+	private final int statusCode;
+
+	// 响应体
+	private final String responseBody;
+
 	/**
 	 * 构造函数
 	 *
-	 * @param errorCode
+	 * @param statusCode
+	 * @param responseBody
 	 * @param message
 	 * @param throwable
 	 */
-	public RestException(String errorCode, String message, Throwable throwable)
+	public RestException(int statusCode, String responseBody, String message, Throwable throwable)
 	{
-		super(errorCode, message, throwable);
-	}
+		super(message, throwable);
 
-	/**
-	 * 构造函数
-	 *
-	 * @param errorCode
-	 * @param message
-	 */
-	public RestException(String errorCode, String message)
-	{
-		super(errorCode, message);
-	}
-
-	/**
-	 * 构造函数
-	 *
-	 * @param errorCode
-	 * @param codeParams
-	 * @param message
-	 * @param throwable
-	 */
-	public RestException(String errorCode, String[] codeParams, String message, Throwable throwable)
-	{
-		super(errorCode, codeParams, message, throwable);
-	}
-
-	/**
-	 * 构造函数
-	 *
-	 * @param errorCode
-	 * @param codeParams
-	 * @param message
-	 */
-	public RestException(String errorCode, String[] codeParams, String message)
-	{
-		super(errorCode, codeParams, message);
+		this.statusCode = statusCode;
+		this.responseBody = responseBody;
 	}
 
 	/**
@@ -68,15 +42,28 @@ public class RestException extends NestedRuntimeException
 	public RestException(String message, Throwable throwable)
 	{
 		super(message, throwable);
+
+		this.statusCode = -1;
+		this.responseBody = null;
 	}
 
 	/**
-	 * 构造函数
-	 *
-	 * @param message
+	 * 获取statusCode
+	 * 
+	 * @return
 	 */
-	public RestException(String message)
+	public int getStatusCode()
 	{
-		super(message);
+		return statusCode;
+	}
+
+	/**
+	 * 获取responseBody
+	 * 
+	 * @return
+	 */
+	public String getResponseBody()
+	{
+		return responseBody;
 	}
 }

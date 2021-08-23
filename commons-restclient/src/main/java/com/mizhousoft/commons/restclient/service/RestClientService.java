@@ -2,6 +2,7 @@ package com.mizhousoft.commons.restclient.service;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.Map;
 
 import com.mizhousoft.commons.restclient.RestException;
 
@@ -21,6 +22,18 @@ public interface RestClientService
 	 * @throws RestException
 	 */
 	<T> T getForObject(String url, Class<T> responseType) throws RestException;
+
+	/**
+	 * 执行get请求获取数据
+	 * 
+	 * @param <T>
+	 * @param url
+	 * @param headerMap
+	 * @param responseType
+	 * @return
+	 * @throws RestException
+	 */
+	<T> T getForObject(String url, Map<String, String> headerMap, Class<T> responseType) throws RestException;
 
 	/**
 	 * 执行POST请求
