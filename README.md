@@ -22,7 +22,7 @@
 
 2. 参考修改版本号流程，修改 version 版本号；
 
-3. 修改 commons.version 版本号； 
+3. 修改 properties 中的  commons.version 版本号； 
 
 4. 执行命令
 	```shell
