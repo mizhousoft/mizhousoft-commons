@@ -1,5 +1,8 @@
 package com.mizhousoft.commons.data.util;
 
+import java.util.List;
+
+import com.mizhousoft.commons.data.constant.PaginationConstants;
 import com.mizhousoft.commons.data.domain.Pageable;
 
 /**
@@ -41,5 +44,30 @@ public class PageUtils
 			int rowOffset = num * pageSize;
 			return rowOffset;
 		}
+	}
+
+	/**
+	 * 是否有更多数据
+	 * 
+	 * @param <T>
+	 * @param list
+	 * @return
+	 */
+	public static <T> boolean isNoMoreData(List<T> list)
+	{
+		return isNoMoreData(list, PaginationConstants.SMALL_PAGE_SIZE);
+	}
+
+	/**
+	 * 是否有更多数据
+	 * 
+	 * @param <T>
+	 * @param list
+	 * @param limitSzie
+	 * @return
+	 */
+	public static <T> boolean isNoMoreData(List<T> list, int limitSzie)
+	{
+		return list.size() < limitSzie;
 	}
 }
