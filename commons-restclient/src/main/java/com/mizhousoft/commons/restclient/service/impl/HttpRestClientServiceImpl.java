@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.commons.collections4.MapUtils;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
@@ -22,10 +23,13 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
@@ -111,6 +115,72 @@ public class HttpRestClientServiceImpl implements RestClientService
 		try
 		{
 			return restTemplate.postForObject(url, request, responseType);
+		}
+		catch (RestClientResponseException e)
+		{
+			throw new RestException(e.getRawStatusCode(), e.getResponseBodyAsString(), e.getMessage(), e);
+		}
+		catch (Throwable e)
+		{
+			throw new RestException(e.getMessage(), e);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <T> T postJSONForObject(String url, String body, Map<String, String> headerMap, Class<T> responseType) throws RestException
+	{
+		try
+		{
+			HttpHeaders headers = new HttpHeaders();
+			MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
+			headers.setContentType(type);
+			if (!MapUtils.isEmpty(headerMap))
+			{
+				headerMap.forEach((key, value) -> headers.add(key, value));
+			}
+
+			HttpEntity<String> httpEntity = new HttpEntity<String>(body, headers);
+
+			return restTemplate.postForObject(url, httpEntity, responseType);
+		}
+		catch (RestClientResponseException e)
+		{
+			throw new RestException(e.getRawStatusCode(), e.getResponseBodyAsString(), e.getMessage(), e);
+		}
+		catch (Throwable e)
+		{
+			throw new RestException(e.getMessage(), e);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <T> T postFormForObject(String url, Map<String, Object> formMap, Map<String, String> headerMap, Class<T> responseType)
+	        throws RestException
+	{
+		try
+		{
+			MultiValueMap<String, Object> postParameters = new LinkedMultiValueMap<>();
+			if (!MapUtils.isEmpty(formMap))
+			{
+				formMap.forEach((key, value) -> postParameters.add(key, value));
+			}
+
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Content-Type", "application/x-www-form-urlencoded");
+			if (!MapUtils.isEmpty(headerMap))
+			{
+				headerMap.forEach((key, value) -> headers.add(key, value));
+			}
+
+			HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(postParameters, headers);
+
+			return restTemplate.postForObject(url, entity, responseType);
 		}
 		catch (RestClientResponseException e)
 		{
@@ -281,5 +351,4 @@ public class HttpRestClientServiceImpl implements RestClientService
 			throw new RuntimeException("Build httpClient failed.", e);
 		}
 	}
-
 }

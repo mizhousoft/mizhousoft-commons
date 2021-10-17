@@ -47,6 +47,33 @@ public interface RestClientService
 	<T> T postForObject(String url, Object request, Class<T> responseType) throws RestException;
 
 	/**
+	 * 执行POST请求
+	 * 
+	 * @param <T>
+	 * @param url
+	 * @param body
+	 * @param headerMap
+	 * @param responseType
+	 * @return
+	 * @throws RestException
+	 */
+	<T> T postJSONForObject(String url, String body, Map<String, String> headerMap, Class<T> responseType) throws RestException;
+
+	/**
+	 * 执行POST请求
+	 * 
+	 * @param <T>
+	 * @param url
+	 * @param formMap
+	 * @param headerMap
+	 * @param responseType
+	 * @return
+	 * @throws RestException
+	 */
+	<T> T postFormForObject(String url, Map<String, Object> formMap, Map<String, String> headerMap, Class<T> responseType)
+	        throws RestException;
+
+	/**
 	 * 下载
 	 * 
 	 * @param url
