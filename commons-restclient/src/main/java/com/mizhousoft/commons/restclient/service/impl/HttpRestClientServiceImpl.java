@@ -96,6 +96,10 @@ public class HttpRestClientServiceImpl implements RestClientService
 
 			return response.getBody();
 		}
+		catch (RestException e)
+		{
+			throw e;
+		}
 		catch (RestClientResponseException e)
 		{
 			throw new RestException(e.getRawStatusCode(), e.getResponseBodyAsString(), e.getMessage(), e);
@@ -210,6 +214,10 @@ public class HttpRestClientServiceImpl implements RestClientService
 			InputStream istream = entity.getBody().getInputStream();
 			return istream;
 		}
+		catch (RestException e)
+		{
+			throw e;
+		}
 		catch (RestClientResponseException e)
 		{
 			throw new RestException(e.getRawStatusCode(), e.getResponseBodyAsString(), e.getMessage(), e);
@@ -237,6 +245,10 @@ public class HttpRestClientServiceImpl implements RestClientService
 
 			InputStream istream = entity.getBody().getInputStream();
 			return istream;
+		}
+		catch (RestException e)
+		{
+			throw e;
 		}
 		catch (RestClientResponseException e)
 		{
