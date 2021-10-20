@@ -91,7 +91,8 @@ public class HttpRestClientServiceImpl implements RestClientService
 			ResponseEntity<T> response = restTemplate.exchange(url, HttpMethod.GET, request, responseType);
 			if (!response.getStatusCode().equals(HttpStatus.OK))
 			{
-				throw new RestException(response.getStatusCodeValue(), response.getBody().toString(), null, null);
+				String body = response.getBody().toString();
+				throw new RestException(response.getStatusCodeValue(), body, body, null);
 			}
 
 			return response.getBody();
