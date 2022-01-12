@@ -11,6 +11,8 @@ import java.time.format.DateTimeFormatter;
  */
 public abstract class LocalDateTimeUtils
 {
+	public static final ZoneOffset DEFAULT_ZONE_OFFSET = ZoneOffset.of("+8");
+
 	public static String formatYmdhms(LocalDateTime localDateTime)
 	{
 		if (null == localDateTime)
@@ -61,16 +63,26 @@ public abstract class LocalDateTimeUtils
 
 	public static long toTimestamp(LocalDateTime localDateTime)
 	{
-		return toTimestamp(localDateTime, ZoneOffset.of("+8"));
+		return toTimestamp(localDateTime, DEFAULT_ZONE_OFFSET);
 	}
 
-	public static long toTimestamp(LocalDateTime localDateTime, ZoneOffset zone)
+	public static long toTimestamp(LocalDateTime localDateTime, ZoneOffset offset)
 	{
 		if (null == localDateTime)
 		{
 			return 0;
 		}
 
-		return localDateTime.toInstant(zone).toEpochMilli();
+		return localDateTime.toInstant(offset).toEpochMilli();
+	}
+
+	public static LocalDateTime toLocalDateTime(long second, ZoneOffset offset)
+	{
+		return LocalDateTime.ofEpochSecond(second, 0, offset);
+	}
+
+	public static LocalDateTime toLocalDateTime(long second)
+	{
+		return LocalDateTime.ofEpochSecond(second, 0, DEFAULT_ZONE_OFFSET);
 	}
 }
