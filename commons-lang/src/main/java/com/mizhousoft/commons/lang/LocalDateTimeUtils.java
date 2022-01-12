@@ -1,6 +1,7 @@
 package com.mizhousoft.commons.lang;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -56,5 +57,20 @@ public abstract class LocalDateTimeUtils
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM");
 		String format = dateTimeFormatter.format(localDateTime);
 		return format;
+	}
+
+	public static long toTimestamp(LocalDateTime localDateTime)
+	{
+		return toTimestamp(localDateTime, ZoneOffset.of("+8"));
+	}
+
+	public static long toTimestamp(LocalDateTime localDateTime, ZoneOffset zone)
+	{
+		if (null == localDateTime)
+		{
+			return 0;
+		}
+
+		return localDateTime.toInstant(zone).toEpochMilli();
 	}
 }
