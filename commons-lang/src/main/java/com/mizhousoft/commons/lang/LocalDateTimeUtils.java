@@ -83,6 +83,11 @@ public abstract class LocalDateTimeUtils
 
 	public static LocalDateTime toLocalDateTime(long second)
 	{
+		if (0 == second)
+		{
+			return null;
+		}
+
 		return LocalDateTime.ofEpochSecond(second, 0, DEFAULT_ZONE_OFFSET);
 	}
 }
