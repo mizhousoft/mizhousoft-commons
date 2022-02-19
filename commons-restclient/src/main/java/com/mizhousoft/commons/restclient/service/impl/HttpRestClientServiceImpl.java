@@ -165,6 +165,36 @@ public class HttpRestClientServiceImpl implements RestClientService
 	 * {@inheritDoc}
 	 */
 	@Override
+	public <T> T postSoapForObject(String url, String body, Map<String, String> headerMap, Class<T> responseType) throws RestException
+	{
+		try
+		{
+			HttpHeaders headers = new HttpHeaders();
+			MediaType type = MediaType.parseMediaType("application/soap+xml; charset=utf-8");
+			headers.setContentType(type);
+			if (!MapUtils.isEmpty(headerMap))
+			{
+				headerMap.forEach((key, value) -> headers.add(key, value));
+			}
+
+			HttpEntity<String> httpEntity = new HttpEntity<String>(body, headers);
+
+			return restTemplate.postForObject(url, httpEntity, responseType);
+		}
+		catch (RestClientResponseException e)
+		{
+			throw new RestException(e.getRawStatusCode(), e.getResponseBodyAsString(), e.getMessage(), e);
+		}
+		catch (Throwable e)
+		{
+			throw new RestException(e.getMessage(), e);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public <T> T postFormForObject(String url, Map<String, Object> formMap, Map<String, String> headerMap, Class<T> responseType)
 	        throws RestException
 	{

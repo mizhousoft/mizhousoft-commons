@@ -64,6 +64,19 @@ public interface RestClientService
 	 * 
 	 * @param <T>
 	 * @param url
+	 * @param body
+	 * @param headerMap
+	 * @param responseType
+	 * @return
+	 * @throws RestException
+	 */
+	<T> T postSoapForObject(String url, String body, Map<String, String> headerMap, Class<T> responseType) throws RestException;
+
+	/**
+	 * 执行POST请求
+	 * 
+	 * @param <T>
+	 * @param url
 	 * @param formMap
 	 * @param headerMap
 	 * @param responseType
