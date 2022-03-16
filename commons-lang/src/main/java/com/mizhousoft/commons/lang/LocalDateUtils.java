@@ -22,7 +22,7 @@ public abstract class LocalDateUtils
 		return localDate.format(DateTimeFormatter.ofPattern(pattern));
 	}
 
-	public static LocalDate parse(String date)
+	public static LocalDate parseYmd(String date)
 	{
 		if (null == date)
 		{
