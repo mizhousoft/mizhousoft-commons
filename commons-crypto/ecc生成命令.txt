@@ -7,14 +7,14 @@
 2. 生成根证书
 	openssl ecparam -name prime256v1 -genkey | openssl ec -aes-256-cbc -out ecc_ca.key
 
-	openssl req -key ecc_ca.key -new -x509 -verify -out ecc_ca.cer -subj "/C=CN/ST=Guangdong/L=Shenzhen/O=USmartcloud Software CO.Ltd/OU=Software Dept/CN=APP Root CA/emailAddress=weixin-miniapp@mizhousoft.com" -days 7300	
+	openssl req -key ecc_ca.key -new -x509 -verify -out ecc_ca.cer -subj "/C=CN/ST=Guangdong/L=Shenzhen/O=Mizhousoft Software CO.Ltd/OU=Software Dept/CN=APP Root CA/emailAddress=weixin-miniapp@mizhousoft.com" -days 7300	
 	
 	
 3.生成认证密钥对 ecc_auth.key
 	openssl ecparam -name prime256v1 -genkey | openssl ec -aes-256-cbc -out ecc_auth.key
 	
 4. 生成认证证书签发请求 ecc_auth.csr
-	openssl req -key ecc_auth.key -new -verify -out ecc_auth.csr -subj "/C=CN/ST=Guangdong/L=Shenzhen/O=USmartcloud Software CO.Ltd/OU=Software Dept/CN=APP Auth Server/emailAddress=weixin-miniapp@mizhousoft.com"
+	openssl req -key ecc_auth.key -new -verify -out ecc_auth.csr -subj "/C=CN/ST=Guangdong/L=Shenzhen/O=Mizhousoft Software CO.Ltd/OU=Software Dept/CN=APP Auth Server/emailAddress=weixin-miniapp@mizhousoft.com"
 	
 5. 生成认证证书 ecc_auth.cer，证书有效期10年
 	openssl x509 -req -days 3650 -sha256 -CA ecc_ca.cer -CAkey ecc_ca.key -in ecc_auth.csr -out ecc_auth.cer -extensions usr_cert -extfile /etc/pki/tls/openssl.cnf -CAcreateserial
