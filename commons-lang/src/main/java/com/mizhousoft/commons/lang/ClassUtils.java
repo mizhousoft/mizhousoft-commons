@@ -1,6 +1,7 @@
 package com.mizhousoft.commons.lang;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -118,9 +119,13 @@ public abstract class ClassUtils
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
 	 * @throws ClassNotFoundException
+	 * @throws SecurityException
+	 * @throws NoSuchMethodException
+	 * @throws InvocationTargetException
+	 * @throws IllegalArgumentException
 	 */
-	public static Object newInstance(String name, ClassLoader classLoader)
-	        throws InstantiationException, IllegalAccessException, ClassNotFoundException
+	public static Object newInstance(String name, ClassLoader classLoader) throws InstantiationException, IllegalAccessException,
+	        ClassNotFoundException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException
 	{
 		return newInstance(forName(name, classLoader));
 	}
@@ -132,8 +137,13 @@ public abstract class ClassUtils
 	 * @return
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
+	 * @throws SecurityException
+	 * @throws NoSuchMethodException
+	 * @throws InvocationTargetException
+	 * @throws IllegalArgumentException
 	 */
-	public static Object newInstance(Class<?> clazz) throws InstantiationException, IllegalAccessException
+	public static Object newInstance(Class<?> clazz) throws InstantiationException, IllegalAccessException, IllegalArgumentException,
+	        InvocationTargetException, NoSuchMethodException, SecurityException
 	{
 		if (clazz == null)
 		{
@@ -141,6 +151,6 @@ public abstract class ClassUtils
 			throw new IllegalArgumentException(msg);
 		}
 
-		return clazz.newInstance();
+		return clazz.getDeclaredConstructor().newInstance();
 	}
 }
