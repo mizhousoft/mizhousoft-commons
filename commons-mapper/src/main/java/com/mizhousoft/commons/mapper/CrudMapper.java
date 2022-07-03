@@ -3,6 +3,7 @@ package com.mizhousoft.commons.mapper;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -74,6 +75,13 @@ public interface CrudMapper<T, ID extends Serializable> extends BaseMapper<T, ID
 	 * @return
 	 */
 	List<T> findAll();
+
+	/**
+	 * 查询ID列表
+	 * 
+	 * @return
+	 */
+	Set<ID> findIdList();
 
 	/**
 	 * 统计大小
