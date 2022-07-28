@@ -13,6 +13,8 @@ public abstract class LocalDateTimeUtils
 {
 	public static final ZoneOffset DEFAULT_ZONE_OFFSET = ZoneOffset.of("+8");
 
+	public static final String DEFAULT_PATTERN = "yyyy-MM-dd HH:mm:ss";
+
 	public static String formatYmdhms(LocalDateTime localDateTime)
 	{
 		if (null == localDateTime)
@@ -89,5 +91,21 @@ public abstract class LocalDateTimeUtils
 		}
 
 		return LocalDateTime.ofEpochSecond(second, 0, DEFAULT_ZONE_OFFSET);
+	}
+
+	public static LocalDateTime parse(String dt)
+	{
+		return parse(dt, DEFAULT_PATTERN);
+	}
+
+	public static LocalDateTime parse(String dt, String pattern)
+	{
+		if (null == dt)
+		{
+			return null;
+		}
+
+		LocalDateTime parse = LocalDateTime.parse(dt, DateTimeFormatter.ofPattern(pattern));
+		return parse;
 	}
 }
