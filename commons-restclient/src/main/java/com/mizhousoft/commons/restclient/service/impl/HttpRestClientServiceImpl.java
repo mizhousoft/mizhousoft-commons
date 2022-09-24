@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
@@ -74,6 +75,16 @@ public class HttpRestClientServiceImpl implements RestClientService
 	@Override
 	public <T> T getForObject(String url, Map<String, String> headerMap, Class<T> responseType) throws RestException
 	{
+		return getForObject(url, headerMap, responseType, HttpStatus.OK.value());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <T> T getForObject(String url, Map<String, String> headerMap, Class<T> responseType, int... expectStatusCodes)
+	        throws RestException
+	{
 		try
 		{
 			HttpHeaders headers = new HttpHeaders();
@@ -89,10 +100,13 @@ public class HttpRestClientServiceImpl implements RestClientService
 
 			HttpEntity<?> request = new HttpEntity<>(headers);
 			ResponseEntity<T> response = restTemplate.exchange(url, HttpMethod.GET, request, responseType);
-			if (!response.getStatusCode().equals(HttpStatus.OK))
+
+			int statusCode = response.getStatusCodeValue();
+			if (!ArrayUtils.contains(expectStatusCodes, statusCode))
 			{
 				String body = response.getBody().toString();
-				throw new RestException(response.getStatusCodeValue(), body, body, null);
+				String message = "Http status code is " + response.getStatusCode() + ", body is " + body;
+				throw new RestException(response.getStatusCodeValue(), body, message, null);
 			}
 
 			return response.getBody();

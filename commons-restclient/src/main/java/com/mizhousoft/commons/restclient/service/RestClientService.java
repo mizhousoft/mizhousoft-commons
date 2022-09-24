@@ -36,6 +36,19 @@ public interface RestClientService
 	<T> T getForObject(String url, Map<String, String> headerMap, Class<T> responseType) throws RestException;
 
 	/**
+	 * 执行get请求获取数据
+	 * 
+	 * @param <T>
+	 * @param url
+	 * @param headerMap
+	 * @param responseType
+	 * @param expectStatusCodes
+	 * @return
+	 * @throws RestException
+	 */
+	<T> T getForObject(String url, Map<String, String> headerMap, Class<T> responseType, int... expectStatusCodes) throws RestException;
+
+	/**
 	 * 执行POST请求
 	 * 
 	 * @param url
