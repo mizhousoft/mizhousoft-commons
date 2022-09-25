@@ -6,10 +6,7 @@ import javax.servlet.ServletContextListener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.mizhousoft.commons.context.support.ApplicationContextRegistration;
 import com.mizhousoft.commons.data.NestedRuntimeException;
 
 /**
@@ -36,9 +33,6 @@ public class CommonContextLoaderListener implements ServletContextListener
 			ServletContext servletContext = sce.getServletContext();
 
 			InnerServletContextHolder.setServletContext(servletContext);
-
-			ApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
-			ApplicationContextRegistration.registerApplicationContext(applicationContext);
 
 			// 调用扩展接口
 			doContextInitialized(sce);
