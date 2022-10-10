@@ -125,7 +125,7 @@ public class DigestAuthenticatorTest
 
 			String url = "http://localhost:/tr069/v1/antenna/fetchAntennaSetting.action";
 
-			RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), "{}");
+			RequestBody body = RequestBody.create("{}", MediaType.parse("application/json; charset=utf-8"));
 
 			Request request = new Request.Builder().url(url).post(body).build();
 			Response response = client.newCall(request).execute();
