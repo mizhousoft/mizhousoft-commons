@@ -17,48 +17,32 @@ public abstract class LocalDateTimeUtils
 
 	public static String formatYmdhms(LocalDateTime localDateTime)
 	{
-		if (null == localDateTime)
-		{
-			return null;
-		}
-
-		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		String format = dateTimeFormatter.format(localDateTime);
-		return format;
+		return format(localDateTime, DEFAULT_PATTERN);
 	}
 
 	public static String formatYmdhm(LocalDateTime localDateTime)
 	{
-		if (null == localDateTime)
-		{
-			return null;
-		}
-
-		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-		String format = dateTimeFormatter.format(localDateTime);
-		return format;
+		return format(localDateTime, "yyyy-MM-dd HH:mm");
 	}
 
 	public static String formatYmd(LocalDateTime localDateTime)
 	{
-		if (null == localDateTime)
-		{
-			return null;
-		}
-
-		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		String format = dateTimeFormatter.format(localDateTime);
-		return format;
+		return format(localDateTime, "yyyy-MM-dd");
 	}
 
 	public static String formatYm(LocalDateTime localDateTime)
+	{
+		return format(localDateTime, "yyyy-MM");
+	}
+
+	public static String format(LocalDateTime localDateTime, String pattern)
 	{
 		if (null == localDateTime)
 		{
 			return null;
 		}
 
-		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM");
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
 		String format = dateTimeFormatter.format(localDateTime);
 		return format;
 	}
