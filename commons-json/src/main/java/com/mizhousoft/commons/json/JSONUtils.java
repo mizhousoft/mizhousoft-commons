@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 /**
  * JSONUtils
@@ -26,9 +27,11 @@ public abstract class JSONUtils
 	{
 		// 序列化忽略空字符
 		SERI_OBJECT_MAPPER.setSerializationInclusion(Include.NON_NULL);
+		SERI_OBJECT_MAPPER.registerModule(new JavaTimeModule());
 
 		// 反序列化忽略未知字段
 		DESERI_OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		DESERI_OBJECT_MAPPER.registerModule(new JavaTimeModule());
 	}
 
 	/**
