@@ -1,6 +1,6 @@
 package com.mizhousoft.commons.crypto;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.mizhousoft.commons.crypto.generator.RandomGenerator;
 import com.mizhousoft.commons.lang.HexUtils;

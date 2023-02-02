@@ -2,14 +2,14 @@ package com.mizhousoft.commons.mail.impl;
 
 import java.io.File;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.mizhousoft.commons.mail.IMailException;
 import com.mizhousoft.commons.mail.MailService;
@@ -19,7 +19,7 @@ import com.mizhousoft.commons.mail.MailService;
  *
  * @version
  */
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = BootApplication.class)
 public class TestMailServiceImpl
 {
@@ -44,7 +44,7 @@ public class TestMailServiceImpl
 		}
 		catch (IMailException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e);
 		}
 	}
 
@@ -58,7 +58,7 @@ public class TestMailServiceImpl
 		}
 		catch (IMailException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e);
 		}
 	}
 
@@ -75,7 +75,7 @@ public class TestMailServiceImpl
 		}
 		catch (IMailException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e);
 		}
 	}
 

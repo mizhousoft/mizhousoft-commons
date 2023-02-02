@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import com.mizhousoft.commons.okhttp.AuthenticationCacheInterceptor;
 import com.mizhousoft.commons.okhttp.CachingAuthenticatorDecorator;
@@ -59,7 +59,7 @@ public class DigestAuthenticatorTest
 		}
 		catch (Throwable e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e);
 		}
 	}
 
@@ -107,7 +107,7 @@ public class DigestAuthenticatorTest
 		}
 		catch (Throwable e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e);
 		}
 	}
 
@@ -139,7 +139,7 @@ public class DigestAuthenticatorTest
 		}
 		catch (Throwable e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e);
 		}
 	}
 }

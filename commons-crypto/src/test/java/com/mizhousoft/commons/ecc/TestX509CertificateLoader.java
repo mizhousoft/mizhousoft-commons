@@ -4,8 +4,8 @@ import java.security.Security;
 
 import org.bouncycastle.jce.interfaces.ECPublicKey;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import com.mizhousoft.commons.crypto.CryptoException;
 
@@ -23,10 +23,10 @@ public class TestX509CertificateLoader
 
 		String certFilePath = TestECCCertificate.class.getClassLoader().getResource("ecc_auth.cer").getFile();
 		ECPublicKey publicKey = X509CertificateLoader.load(certFilePath);
-		Assert.assertNotNull(publicKey);
+		Assertions.assertNotNull(publicKey);
 
 		certFilePath = TestECCCertificate.class.getClassLoader().getResource("ecc_ca.cer").getFile();
 		publicKey = X509CertificateLoader.load(certFilePath);
-		Assert.assertNotNull(publicKey);
+		Assertions.assertNotNull(publicKey);
 	}
 }

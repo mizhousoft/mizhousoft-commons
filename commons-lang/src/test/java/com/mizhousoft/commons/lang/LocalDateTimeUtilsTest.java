@@ -2,8 +2,8 @@ package com.mizhousoft.commons.lang;
 
 import java.time.LocalDateTime;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * LocalDateTimeUtils
@@ -21,6 +21,6 @@ public class LocalDateTimeUtilsTest
 
 		String result = LocalDateTimeUtils.formatYmdhms(d);
 
-		Assert.assertEquals(time, result);
+		Assertions.assertEquals(time, result);
 	}
 }

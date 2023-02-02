@@ -2,7 +2,7 @@ package com.mizhousoft.commons.qrcode;
 
 import java.io.File;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * WifiPasswordGenerator

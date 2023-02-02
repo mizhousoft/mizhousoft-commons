@@ -6,8 +6,8 @@ import java.security.PublicKey;
 import java.security.Security;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import com.mizhousoft.commons.crypto.CryptoException;
 
@@ -36,7 +36,7 @@ public class TestEccGenerator
 		PrivateKey d = EccGenerator.decodePrivateKey(priv);
 		PublicKey k = EccGenerator.decodePublicKey(pub);
 
-		Assert.assertNotNull(d);
-		Assert.assertNotNull(k);
+		Assertions.assertNotNull(d);
+		Assertions.assertNotNull(k);
 	}
 }

@@ -3,8 +3,8 @@ package com.mizhousoft.commons.lang;
 import java.awt.Color;
 import java.awt.Font;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * WaterMarkUtils Test
@@ -47,7 +47,7 @@ public class WaterMarkUtilsTest
 		catch (Exception e)
 		{
 			e.printStackTrace();
-			Assert.fail(e.getMessage());
+			Assertions.fail(e);
 		}
 	}
 
@@ -84,7 +84,7 @@ public class WaterMarkUtilsTest
 		}
 		catch (Exception e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e);
 		}
 	}
 
@@ -121,7 +121,7 @@ public class WaterMarkUtilsTest
 		}
 		catch (Exception e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e);
 		}
 	}
 }

@@ -1,8 +1,8 @@
 package com.mizhousoft.commons.crypto;
 
 import org.apache.commons.codec.binary.Base64;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import com.mizhousoft.commons.lang.CharEncoding;
 import com.mizhousoft.commons.lang.HexUtils;
@@ -32,7 +32,7 @@ public class TestAESEncryptor
 		}
 		catch (CryptoException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e);
 		}
 	}
 }

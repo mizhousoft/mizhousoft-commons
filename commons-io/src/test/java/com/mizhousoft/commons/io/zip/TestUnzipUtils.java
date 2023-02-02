@@ -2,8 +2,8 @@ package com.mizhousoft.commons.io.zip;
 
 import java.io.File;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import com.mizhousoft.commons.io.ZipException;
 
@@ -26,7 +26,7 @@ public class TestUnzipUtils
 		}
 		catch (ZipException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e);
 		}
 	}
 
@@ -40,11 +40,11 @@ public class TestUnzipUtils
 
 			ZipUtils.checkZip(file);
 
-			Assert.fail();
+			Assertions.fail();
 		}
 		catch (ZipException e)
 		{
-			Assert.assertTrue(true);
+			Assertions.assertTrue(true);
 		}
 	}
 }

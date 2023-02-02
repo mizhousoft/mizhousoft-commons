@@ -1,7 +1,7 @@
 package com.mizhousoft.commons.crypto;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import com.mizhousoft.commons.crypto.generator.PBEPasswdGenerator;
 
@@ -23,12 +23,12 @@ public class TestPBEPasswdGeneratorImpl
 			String encPasswd = PBEPasswdGenerator.derivePasswd(passwd, salt);
 			System.out.println(encPasswd);
 
-			Assert.assertEquals(encPasswd,
+			Assertions.assertEquals(encPasswd,
 			        "Z62CL9sRrKNcBMKJgi45YUlwZyxO5BsgFtOuMVVC/SmmFbIUPGTgl4FbFU+SVnJqGEa3b7eoWYZOSYEISeKiaw==");
 		}
 		catch (CryptoException e)
 		{
-			Assert.fail(e.getMessage());
+			Assertions.fail(e);
 		}
 	}
 }
