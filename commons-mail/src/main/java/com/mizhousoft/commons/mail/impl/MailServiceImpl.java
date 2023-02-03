@@ -5,6 +5,9 @@ import java.io.File;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.commons.lang3.ArrayUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -21,6 +24,8 @@ import com.mizhousoft.commons.mail.MailService;
  */
 public class MailServiceImpl implements MailService
 {
+	private static final Logger LOG = LoggerFactory.getLogger(MailServiceImpl.class);
+
 	private JavaMailSender mailSender;
 
 	private String from;
@@ -31,6 +36,12 @@ public class MailServiceImpl implements MailService
 	@Override
 	public void sendTextMail(String[] to, String subject, String content) throws IMailException
 	{
+		if (ArrayUtils.isEmpty(to))
+		{
+			LOG.warn("To is empty.");
+			return;
+		}
+
 		try
 		{
 			// 创建SimpleMailMessage对象
@@ -58,6 +69,12 @@ public class MailServiceImpl implements MailService
 	@Override
 	public void sendHtmlMail(String[] to, String subject, String content) throws IMailException
 	{
+		if (ArrayUtils.isEmpty(to))
+		{
+			LOG.warn("To is empty.");
+			return;
+		}
+
 		// 获取MimeMessage对象
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper messageHelper;
@@ -88,6 +105,12 @@ public class MailServiceImpl implements MailService
 	@Override
 	public void sendMailWithAttachment(String[] to, String subject, String content, String filePath) throws IMailException
 	{
+		if (ArrayUtils.isEmpty(to))
+		{
+			LOG.warn("To is empty.");
+			return;
+		}
+
 		MimeMessage message = mailSender.createMimeMessage();
 
 		try
