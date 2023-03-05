@@ -22,12 +22,12 @@ import com.mizhousoft.commons.lang.CharEncoding;
  */
 public abstract class ZipCompressUtils
 {
-	public static void compress(String destFilePath, String srcFilePath) throws ZipException
+	public static void compress(String destFilePath, String srcFilePath, boolean ignoreRoot) throws ZipException
 	{
-		compress(new File(destFilePath), new File(srcFilePath));
+		compress(new File(destFilePath), new File(srcFilePath), ignoreRoot);
 	}
 
-	public static void compress(File destFile, File srcFile) throws ZipException
+	public static void compress(File destFile, File srcFile, boolean ignoreParent) throws ZipException
 	{
 		if (!srcFile.exists())
 		{
@@ -41,7 +41,21 @@ public abstract class ZipCompressUtils
 			zipArchiveStream.setEncoding(CharEncoding.UTF8_NAME);
 			zipArchiveStream.setUseZip64(Zip64Mode.AsNeeded);
 
-			putArchiveFile(zipArchiveStream, srcFile, "");
+			if (ignoreParent && srcFile.isDirectory())
+			{
+				File[] files = srcFile.listFiles();
+				if (files != null)
+				{
+					for (File file : files)
+					{
+						putArchiveFile(zipArchiveStream, file, "");
+					}
+				}
+			}
+			else
+			{
+				putArchiveFile(zipArchiveStream, srcFile, "");
+			}
 		}
 		catch (IOException e)
 		{

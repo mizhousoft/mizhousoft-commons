@@ -17,7 +17,7 @@ public class TestZipCompressUtils
 	{
 		try
 		{
-			ZipCompressUtils.compress("C:\\\\work\\\\test\\ant.zip", "C:\\work\\test\\main.go");
+			ZipCompressUtils.compress("C:\\\\work\\\\test\\ant.zip", "C:\\work\\test\\main.go", true);
 		}
 		catch (ZipException e)
 		{
