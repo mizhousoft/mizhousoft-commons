@@ -27,7 +27,7 @@ public abstract class ZipCompressUtils
 		compress(new File(destFilePath), new File(srcFilePath), ignoreRoot);
 	}
 
-	public static void compress(File destFile, File srcFile, boolean ignoreParent) throws ZipException
+	public static void compress(File destFile, File srcFile, boolean ignoreRoot) throws ZipException
 	{
 		if (!srcFile.exists())
 		{
@@ -41,7 +41,7 @@ public abstract class ZipCompressUtils
 			zipArchiveStream.setEncoding(CharEncoding.UTF8_NAME);
 			zipArchiveStream.setUseZip64(Zip64Mode.AsNeeded);
 
-			if (ignoreParent && srcFile.isDirectory())
+			if (ignoreRoot && srcFile.isDirectory())
 			{
 				File[] files = srcFile.listFiles();
 				if (files != null)
