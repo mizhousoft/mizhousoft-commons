@@ -35,6 +35,13 @@ public abstract class ZxingUtils
 
 	public static void genQRCode(QrcodeParam codeParam, String destPath) throws QrcodeException
 	{
+		File destFile = new File(destPath);
+
+		genQRCode(codeParam, destFile);
+	}
+
+	public static void genQRCode(QrcodeParam codeParam, File destFile) throws QrcodeException
+	{
 		try
 		{
 			Map<EncodeHintType, Object> hints = new HashMap<EncodeHintType, Object>(3);
@@ -53,7 +60,6 @@ public abstract class ZxingUtils
 			int offColor = codeParam.getOffColor();
 
 			MatrixToImageConfig config = new MatrixToImageConfig(onColor, offColor);
-			File destFile = new File(destPath);
 
 			if (codeParam instanceof QrcodeLogoParam)
 			{
