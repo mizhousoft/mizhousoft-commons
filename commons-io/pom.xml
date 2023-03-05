@@ -25,6 +25,11 @@
 			<version>${commons.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-compress</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>com.mizhousoft.commons</groupId>
 			<artifactId>commons-lang</artifactId>
 			<version>${commons.version}</version>
