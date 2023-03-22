@@ -2,6 +2,10 @@ package com.mizhousoft.commons.lang;
 
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.apache.commons.lang3.ArrayUtils;
 
 /**
  * 字符串工具类
@@ -10,6 +14,8 @@ import java.text.Normalizer.Form;
  */
 public abstract class StringUtils
 {
+	private static final String SEPARATOR = ",";
+
 	/**
 	 * 字符串归一化
 	 * 
@@ -36,5 +42,30 @@ public abstract class StringUtils
 	{
 		String data = new String(bytes, CharEncoding.UTF8);
 		return data;
+	}
+
+	public static String join(Set<Integer> list)
+	{
+		return org.apache.commons.lang3.StringUtils.join(list, SEPARATOR);
+	}
+
+	public static Set<Integer> splitToIntSet(String data)
+	{
+		String[] values = org.apache.commons.lang3.StringUtils.split(data, SEPARATOR);
+
+		if (!ArrayUtils.isEmpty(values))
+		{
+			Set<Integer> results = new HashSet<>(values.length);
+			for (String value : values)
+			{
+				results.add(Integer.valueOf(value));
+			}
+
+			return results;
+		}
+		else
+		{
+			return new HashSet<>(0);
+		}
 	}
 }
