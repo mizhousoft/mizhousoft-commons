@@ -14,10 +14,15 @@ public abstract class LocalDateUtils
 
 	public static String formatYmd(LocalDate localDate)
 	{
-		return formatYmd(localDate, DEFAULT_PATTERN);
+		return format(localDate, DEFAULT_PATTERN);
 	}
 
-	public static String formatYmd(LocalDate localDate, String pattern)
+	public static String formatYm(LocalDate localDate)
+	{
+		return format(localDate, "yyyy-MM");
+	}
+
+	public static String format(LocalDate localDate, String pattern)
 	{
 		if (null == localDate)
 		{
@@ -29,10 +34,10 @@ public abstract class LocalDateUtils
 
 	public static LocalDate parseYmd(String date)
 	{
-		return parseYmd(date, DEFAULT_PATTERN);
+		return parse(date, DEFAULT_PATTERN);
 	}
 
-	public static LocalDate parseYmd(String date, String pattern)
+	public static LocalDate parse(String date, String pattern)
 	{
 		if (null == date)
 		{
