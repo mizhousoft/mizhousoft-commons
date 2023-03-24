@@ -35,6 +35,11 @@ public abstract class LocalDateTimeUtils
 		return format(localDateTime, "yyyy-MM");
 	}
 
+	public static String formatMd(LocalDateTime localDateTime)
+	{
+		return format(localDateTime, "MM-dd");
+	}
+
 	public static String format(LocalDateTime localDateTime, String pattern)
 	{
 		if (null == localDateTime)
