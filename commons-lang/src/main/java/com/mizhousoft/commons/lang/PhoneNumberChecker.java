@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
  */
 public abstract class PhoneNumberChecker
 {
-	public static final String PHONE_REGEX = "^[1](([3][0-9])|([4][0,5-9])|([5][0-3,5-9])|([6][5,6])|([7][0-8])|([8][0-9])|([9][0,1,3,5,6,8,9]))[0-9]{8}$";
+	public static final String PHONE_REGEX = "^[1](([3][0-9])|([4][0,5-9])|([5][0-3,5-9])|([6][0-9])|([7][0-9])|([8][0-9])|([9][0,1,3,5,6,8,9]))[0-9]{8}$";
 
 	private static final Pattern PHONE_PATTERN = Pattern.compile(PHONE_REGEX);
 
