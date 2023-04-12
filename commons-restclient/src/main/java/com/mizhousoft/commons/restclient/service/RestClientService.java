@@ -3,6 +3,7 @@ package com.mizhousoft.commons.restclient.service;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Map;
+import java.util.Set;
 
 import com.mizhousoft.commons.restclient.RestException;
 
@@ -16,12 +17,14 @@ public interface RestClientService
 	/**
 	 * 执行get请求获取数据
 	 * 
+	 * @param <T>
 	 * @param url
 	 * @param responseType
+	 * @param uriVariables
 	 * @return
 	 * @throws RestException
 	 */
-	<T> T getForObject(String url, Class<T> responseType) throws RestException;
+	<T> T getForObject(String url, Class<T> responseType, Object... uriVariables) throws RestException;
 
 	/**
 	 * 执行get请求获取数据
@@ -30,10 +33,11 @@ public interface RestClientService
 	 * @param url
 	 * @param headerMap
 	 * @param responseType
+	 * @param uriVariables
 	 * @return
 	 * @throws RestException
 	 */
-	<T> T getForObject(String url, Map<String, String> headerMap, Class<T> responseType) throws RestException;
+	<T> T getForObject(String url, Map<String, String> headerMap, Class<T> responseType, Object... uriVariables) throws RestException;
 
 	/**
 	 * 执行get请求获取数据
@@ -43,21 +47,25 @@ public interface RestClientService
 	 * @param headerMap
 	 * @param responseType
 	 * @param expectStatusCodes
+	 * @param uriVariables
 	 * @return
 	 * @throws RestException
 	 */
-	<T> T getForObject(String url, Map<String, String> headerMap, Class<T> responseType, int... expectStatusCodes) throws RestException;
+	<T> T getForObject(String url, Map<String, String> headerMap, Class<T> responseType, Set<Integer> expectStatusCodes,
+	        Object... uriVariables) throws RestException;
 
 	/**
 	 * 执行POST请求
 	 * 
+	 * @param <T>
 	 * @param url
 	 * @param request
 	 * @param responseType
+	 * @param uriVariables
 	 * @return
 	 * @throws RestException
 	 */
-	<T> T postForObject(String url, Object request, Class<T> responseType) throws RestException;
+	<T> T postForObject(String url, Object request, Class<T> responseType, Object... uriVariables) throws RestException;
 
 	/**
 	 * 执行POST请求
@@ -67,10 +75,12 @@ public interface RestClientService
 	 * @param body
 	 * @param headerMap
 	 * @param responseType
+	 * @param uriVariables
 	 * @return
 	 * @throws RestException
 	 */
-	<T> T postJSONForObject(String url, String body, Map<String, String> headerMap, Class<T> responseType) throws RestException;
+	<T> T postJSONForObject(String url, String body, Map<String, String> headerMap, Class<T> responseType, Object... uriVariables)
+	        throws RestException;
 
 	/**
 	 * 执行POST请求
@@ -80,10 +90,12 @@ public interface RestClientService
 	 * @param body
 	 * @param headerMap
 	 * @param responseType
+	 * @param uriVariables
 	 * @return
 	 * @throws RestException
 	 */
-	<T> T postSoapForObject(String url, String body, Map<String, String> headerMap, Class<T> responseType) throws RestException;
+	<T> T postSoapForObject(String url, String body, Map<String, String> headerMap, Class<T> responseType, Object... uriVariables)
+	        throws RestException;
 
 	/**
 	 * 执行POST请求
@@ -93,11 +105,12 @@ public interface RestClientService
 	 * @param formMap
 	 * @param headerMap
 	 * @param responseType
+	 * @param uriVariables
 	 * @return
 	 * @throws RestException
 	 */
-	<T> T postFormForObject(String url, Map<String, Object> formMap, Map<String, String> headerMap, Class<T> responseType)
-	        throws RestException;
+	<T> T postFormForObject(String url, Map<String, Object> formMap, Map<String, String> headerMap, Class<T> responseType,
+	        Object... uriVariables) throws RestException;
 
 	/**
 	 * 下载

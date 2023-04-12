@@ -6,9 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
@@ -53,11 +53,11 @@ public class HttpRestClientServiceImpl implements RestClientService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <T> T getForObject(String url, Class<T> responseType) throws RestException
+	public <T> T getForObject(String url, Class<T> responseType, Object... uriVariables) throws RestException
 	{
 		try
 		{
-			return restTemplate.getForObject(url, responseType);
+			return restTemplate.getForObject(url, responseType, uriVariables);
 		}
 		catch (RestClientResponseException e)
 		{
@@ -73,17 +73,17 @@ public class HttpRestClientServiceImpl implements RestClientService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <T> T getForObject(String url, Map<String, String> headerMap, Class<T> responseType) throws RestException
+	public <T> T getForObject(String url, Map<String, String> headerMap, Class<T> responseType, Object... uriVariables) throws RestException
 	{
-		return getForObject(url, headerMap, responseType, HttpStatus.OK.value());
+		return getForObject(url, headerMap, responseType, Set.of(HttpStatus.OK.value()), uriVariables);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <T> T getForObject(String url, Map<String, String> headerMap, Class<T> responseType, int... expectStatusCodes)
-	        throws RestException
+	public <T> T getForObject(String url, Map<String, String> headerMap, Class<T> responseType, Set<Integer> expectStatusCodes,
+	        Object... uriVariables) throws RestException
 	{
 		try
 		{
@@ -99,10 +99,10 @@ public class HttpRestClientServiceImpl implements RestClientService
 			}
 
 			HttpEntity<?> request = new HttpEntity<>(headers);
-			ResponseEntity<T> response = restTemplate.exchange(url, HttpMethod.GET, request, responseType);
+			ResponseEntity<T> response = restTemplate.exchange(url, HttpMethod.GET, request, responseType, uriVariables);
 
 			int statusCode = response.getStatusCodeValue();
-			if (!ArrayUtils.contains(expectStatusCodes, statusCode))
+			if (null == expectStatusCodes || !expectStatusCodes.contains(statusCode))
 			{
 				String body = response.getBody().toString();
 				String message = "Http status code is " + response.getStatusCode() + ", body is " + body;
@@ -129,11 +129,11 @@ public class HttpRestClientServiceImpl implements RestClientService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <T> T postForObject(String url, Object request, Class<T> responseType) throws RestException
+	public <T> T postForObject(String url, Object request, Class<T> responseType, Object... uriVariables) throws RestException
 	{
 		try
 		{
-			return restTemplate.postForObject(url, request, responseType);
+			return restTemplate.postForObject(url, request, responseType, uriVariables);
 		}
 		catch (RestClientResponseException e)
 		{
@@ -149,7 +149,8 @@ public class HttpRestClientServiceImpl implements RestClientService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <T> T postJSONForObject(String url, String body, Map<String, String> headerMap, Class<T> responseType) throws RestException
+	public <T> T postJSONForObject(String url, String body, Map<String, String> headerMap, Class<T> responseType, Object... uriVariables)
+	        throws RestException
 	{
 		try
 		{
@@ -163,7 +164,7 @@ public class HttpRestClientServiceImpl implements RestClientService
 
 			HttpEntity<String> httpEntity = new HttpEntity<String>(body, headers);
 
-			return restTemplate.postForObject(url, httpEntity, responseType);
+			return restTemplate.postForObject(url, httpEntity, responseType, uriVariables);
 		}
 		catch (RestClientResponseException e)
 		{
@@ -179,7 +180,8 @@ public class HttpRestClientServiceImpl implements RestClientService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <T> T postSoapForObject(String url, String body, Map<String, String> headerMap, Class<T> responseType) throws RestException
+	public <T> T postSoapForObject(String url, String body, Map<String, String> headerMap, Class<T> responseType, Object... uriVariables)
+	        throws RestException
 	{
 		try
 		{
@@ -193,7 +195,7 @@ public class HttpRestClientServiceImpl implements RestClientService
 
 			HttpEntity<String> httpEntity = new HttpEntity<String>(body, headers);
 
-			return restTemplate.postForObject(url, httpEntity, responseType);
+			return restTemplate.postForObject(url, httpEntity, responseType, uriVariables);
 		}
 		catch (RestClientResponseException e)
 		{
@@ -209,8 +211,8 @@ public class HttpRestClientServiceImpl implements RestClientService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <T> T postFormForObject(String url, Map<String, Object> formMap, Map<String, String> headerMap, Class<T> responseType)
-	        throws RestException
+	public <T> T postFormForObject(String url, Map<String, Object> formMap, Map<String, String> headerMap, Class<T> responseType,
+	        Object... uriVariables) throws RestException
 	{
 		try
 		{
@@ -229,7 +231,7 @@ public class HttpRestClientServiceImpl implements RestClientService
 
 			HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(postParameters, headers);
 
-			return restTemplate.postForObject(url, entity, responseType);
+			return restTemplate.postForObject(url, entity, responseType, uriVariables);
 		}
 		catch (RestClientResponseException e)
 		{

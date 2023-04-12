@@ -67,7 +67,7 @@ public class HttpsRestClientServiceImpl extends HttpRestClientServiceImpl
 			HostnameVerifier hostnameVerifier = new DefaultHostnameVerifier();
 
 			SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(sslContext,
-			        new String[] { "TLSv1", "TLSv1.1", "TLSv1.2" }, null, hostnameVerifier);
+			        new String[] { "TLSv1", "TLSv1.1", "TLSv1.2", "TLSv1.3" }, null, hostnameVerifier);
 
 			Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory> create()
 			        .register("https", sslSocketFactory).register("http", PlainConnectionSocketFactory.getSocketFactory()).build();
