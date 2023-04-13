@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.mizhousoft.commons.restclient.RestException;
+import com.mizhousoft.commons.restclient.RestResponse;
 
 /**
  * Rest客户端调用服务
@@ -81,6 +82,18 @@ public interface RestClientService
 	 */
 	<T> T postJSONForObject(String url, String body, Map<String, String> headerMap, Class<T> responseType, Object... uriVariables)
 	        throws RestException;
+
+	/**
+	 * 执行POST请求
+	 * 
+	 * @param url
+	 * @param body
+	 * @param headerMap
+	 * @param uriVariables
+	 * @return
+	 * @throws RestException
+	 */
+	RestResponse postJSON(String url, String body, Map<String, String> headerMap, Object... uriVariables) throws RestException;
 
 	/**
 	 * 执行POST请求

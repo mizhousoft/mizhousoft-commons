@@ -36,6 +36,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.mizhousoft.commons.lang.CharEncoding;
 import com.mizhousoft.commons.restclient.RestException;
+import com.mizhousoft.commons.restclient.RestResponse;
 import com.mizhousoft.commons.restclient.service.RestClientService;
 
 /**
@@ -165,6 +166,47 @@ public class HttpRestClientServiceImpl implements RestClientService
 			HttpEntity<String> httpEntity = new HttpEntity<String>(body, headers);
 
 			return restTemplate.postForObject(url, httpEntity, responseType, uriVariables);
+		}
+		catch (RestClientResponseException e)
+		{
+			throw new RestException(e.getRawStatusCode(), e.getResponseBodyAsString(), e.getMessage(), e);
+		}
+		catch (Throwable e)
+		{
+			throw new RestException(e.getMessage(), e);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public RestResponse postJSON(String url, String body, Map<String, String> headerMap, Object... uriVariables) throws RestException
+	{
+		try
+		{
+			HttpHeaders headers = new HttpHeaders();
+			MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
+			headers.setContentType(type);
+			if (!MapUtils.isEmpty(headerMap))
+			{
+				headerMap.forEach((key, value) -> headers.add(key, value));
+			}
+
+			HttpEntity<String> httpEntity = new HttpEntity<String>(body, headers);
+
+			ResponseEntity<String> respEntity = restTemplate.postForEntity(url, httpEntity, String.class, uriVariables);
+
+			String respBody = respEntity.getBody();
+			HttpHeaders respHeaders = respEntity.getHeaders();
+			int statusCode = respEntity.getStatusCode().value();
+
+			RestResponse restResponse = new RestResponse();
+			restResponse.setBody(respBody);
+			restResponse.setStatusCode(statusCode);
+			restResponse.setHeaders(respHeaders.toSingleValueMap());
+
+			return restResponse;
 		}
 		catch (RestClientResponseException e)
 		{
