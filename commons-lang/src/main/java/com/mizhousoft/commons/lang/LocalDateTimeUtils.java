@@ -102,19 +102,28 @@ public abstract class LocalDateTimeUtils
 		return LocalDateTime.ofEpochSecond(second, 0, DEFAULT_ZONE_OFFSET);
 	}
 
-	public static LocalDateTime parse(String dt)
+	public static LocalDateTime parse(String input)
 	{
-		return parse(dt, DEFAULT_PATTERN);
+		return parse(input, DEFAULT_PATTERN);
 	}
 
-	public static LocalDateTime parse(String dt, String pattern)
+	public static LocalDateTime parse(String input, String pattern)
 	{
-		if (null == dt)
+		if (null == input)
 		{
 			return null;
 		}
 
-		LocalDateTime parse = LocalDateTime.parse(dt, DateTimeFormatter.ofPattern(pattern));
-		return parse;
+		return LocalDateTime.parse(input, DateTimeFormatter.ofPattern(pattern));
+	}
+
+	public static LocalDateTime parseISOOffset(String input)
+	{
+		if (null == input)
+		{
+			return null;
+		}
+
+		return LocalDateTime.parse(input, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
 	}
 }
