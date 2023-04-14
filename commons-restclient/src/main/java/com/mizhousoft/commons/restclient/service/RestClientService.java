@@ -56,6 +56,17 @@ public interface RestClientService
 	        Object... uriVariables) throws RestException;
 
 	/**
+	 * 执行get请求获取数据
+	 * 
+	 * @param url
+	 * @param headerMap
+	 * @param uriVariables
+	 * @return
+	 * @throws RestException
+	 */
+	RestResponse get(String url, Map<String, String> headerMap, Object... uriVariables) throws RestException;
+
+	/**
 	 * 执行POST请求
 	 * 
 	 * @param <T>
@@ -86,18 +97,6 @@ public interface RestClientService
 	/**
 	 * 执行POST请求
 	 * 
-	 * @param url
-	 * @param body
-	 * @param headerMap
-	 * @param uriVariables
-	 * @return
-	 * @throws RestException
-	 */
-	RestResponse postJSON(String url, String body, Map<String, String> headerMap, Object... uriVariables) throws RestException;
-
-	/**
-	 * 执行POST请求
-	 * 
 	 * @param <T>
 	 * @param url
 	 * @param body
@@ -124,6 +123,18 @@ public interface RestClientService
 	 */
 	<T> T postFormForObject(String url, Map<String, Object> formMap, Map<String, String> headerMap, Class<T> responseType,
 	        Object... uriVariables) throws RestException;
+
+	/**
+	 * 执行POST请求
+	 * 
+	 * @param url
+	 * @param body
+	 * @param headerMap
+	 * @param uriVariables
+	 * @return
+	 * @throws RestException
+	 */
+	RestResponse postJSON(String url, String body, Map<String, String> headerMap, Object... uriVariables) throws RestException;
 
 	/**
 	 * 下载

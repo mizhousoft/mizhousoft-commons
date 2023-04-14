@@ -15,6 +15,8 @@ public abstract class LocalDateTimeUtils
 
 	public static final String DEFAULT_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
+	public static final String TIME_ZONE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+
 	public static String formatYmdhms(LocalDateTime localDateTime)
 	{
 		return format(localDateTime, DEFAULT_PATTERN);
@@ -38,6 +40,24 @@ public abstract class LocalDateTimeUtils
 	public static String formatMd(LocalDateTime localDateTime)
 	{
 		return format(localDateTime, "MM-dd");
+	}
+
+	public static String formatZhZone(LocalDateTime localDateTime, boolean withZone)
+	{
+		if (null == localDateTime)
+		{
+			return null;
+		}
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_ZONE_FORMAT);
+		String format = localDateTime.atZone(DEFAULT_ZONE_OFFSET).format(formatter);
+
+		if (withZone)
+		{
+			format = format + "+08:00";
+		}
+
+		return format;
 	}
 
 	public static String format(LocalDateTime localDateTime, String pattern)
