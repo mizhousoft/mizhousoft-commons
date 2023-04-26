@@ -430,7 +430,7 @@ public class HttpRestClientServiceImpl implements RestClientService
 	/**
 	 * 初始化
 	 */
-	public void init()
+	public void init(int connectTimeout, int readTimeout)
 	{
 		try
 		{
@@ -441,8 +441,8 @@ public class HttpRestClientServiceImpl implements RestClientService
 			HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
 			requestFactory.setHttpClient(httpClient);
 			requestFactory.setConnectionRequestTimeout(10000);
-			requestFactory.setConnectTimeout(10000);
-			requestFactory.setReadTimeout(30000);
+			requestFactory.setConnectTimeout(connectTimeout);
+			requestFactory.setReadTimeout(readTimeout);
 
 			restTemplate = new RestTemplate();
 			restTemplate.setRequestFactory(requestFactory);
