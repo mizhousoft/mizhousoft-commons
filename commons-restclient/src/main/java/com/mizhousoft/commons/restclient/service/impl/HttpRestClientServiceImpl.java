@@ -430,6 +430,14 @@ public class HttpRestClientServiceImpl implements RestClientService
 	/**
 	 * 初始化
 	 */
+	public void init()
+	{
+		this.init(10000, 30000);
+	}
+
+	/**
+	 * 初始化
+	 */
 	public void init(int connectTimeout, int readTimeout)
 	{
 		try
