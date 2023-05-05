@@ -13,7 +13,7 @@ public class PhoneNumberCheckerTest
 	@Test
 	public void isValid()
 	{
-		boolean valid = PhoneNumberChecker.isValid("16738556606");
+		boolean valid = PhoneNumberChecker.isValid("19273632258");
 		Assertions.assertTrue(valid);
 	}
 }
