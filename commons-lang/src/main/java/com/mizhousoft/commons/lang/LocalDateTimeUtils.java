@@ -1,6 +1,7 @@
 package com.mizhousoft.commons.lang;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
@@ -125,5 +126,35 @@ public abstract class LocalDateTimeUtils
 		}
 
 		return LocalDateTime.parse(input, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+	}
+
+	public static LocalDateTime firstDayOfWeek()
+	{
+		return LocalDateTime.of(LocalDateUtils.firstDayOfWeek(), LocalTime.MIN);
+	}
+
+	public static LocalDateTime lastDayOfWeek()
+	{
+		return LocalDateTime.of(LocalDateUtils.lastDayOfWeek(), LocalTime.MAX);
+	}
+
+	public static LocalDateTime firstDayOfMonth()
+	{
+		return LocalDateTime.of(LocalDateUtils.firstDayOfMonth(), LocalTime.MIN);
+	}
+
+	public static LocalDateTime lastDayOfMonth()
+	{
+		return LocalDateTime.of(LocalDateUtils.lastDayOfMonth(), LocalTime.MAX);
+	}
+
+	public static LocalDateTime firstDayOfYear()
+	{
+		return LocalDateTime.of(LocalDateUtils.firstDayOfYear(), LocalTime.MIN);
+	}
+
+	public static LocalDateTime lastDayOfYear()
+	{
+		return LocalDateTime.of(LocalDateUtils.lastDayOfYear(), LocalTime.MAX);
 	}
 }
