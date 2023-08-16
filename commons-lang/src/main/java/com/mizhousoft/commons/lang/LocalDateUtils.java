@@ -1,9 +1,12 @@
 package com.mizhousoft.commons.lang;
 
 import java.time.DayOfWeek;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
+import java.util.Date;
 
 /**
  * 工具类
@@ -83,5 +86,15 @@ public abstract class LocalDateUtils
 	public static LocalDate lastDayOfYear()
 	{
 		return LocalDate.now().with(TemporalAdjusters.lastDayOfYear());
+	}
+
+	public static Date toDate(LocalDate localDate)
+	{
+		return Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+	}
+
+	public static LocalDate toLocalDate(Date date)
+	{
+		return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
 	}
 }
