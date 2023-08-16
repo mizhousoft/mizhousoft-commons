@@ -137,9 +137,19 @@ public abstract class LocalDateTimeUtils
 		return LocalDateTime.of(LocalDateUtils.firstDayOfWeek(), LocalTime.MIN);
 	}
 
+	public static LocalDateTime firstDayOfWeek(LocalDateTime dateTime)
+	{
+		return LocalDateTime.of(LocalDateUtils.firstDayOfWeek(dateTime.toLocalDate()), LocalTime.MIN);
+	}
+
 	public static LocalDateTime lastDayOfWeek()
 	{
 		return LocalDateTime.of(LocalDateUtils.lastDayOfWeek(), LocalTime.MAX);
+	}
+
+	public static LocalDateTime lastDayOfWeek(LocalDateTime dateTime)
+	{
+		return LocalDateTime.of(LocalDateUtils.lastDayOfWeek(dateTime.toLocalDate()), LocalTime.MAX);
 	}
 
 	public static LocalDateTime firstDayOfMonth()
@@ -147,9 +157,19 @@ public abstract class LocalDateTimeUtils
 		return LocalDateTime.of(LocalDateUtils.firstDayOfMonth(), LocalTime.MIN);
 	}
 
+	public static LocalDateTime firstDayOfMonth(LocalDateTime dateTime)
+	{
+		return LocalDateTime.of(LocalDateUtils.firstDayOfMonth(dateTime.toLocalDate()), LocalTime.MIN);
+	}
+
 	public static LocalDateTime lastDayOfMonth()
 	{
 		return LocalDateTime.of(LocalDateUtils.lastDayOfMonth(), LocalTime.MAX);
+	}
+
+	public static LocalDateTime lastDayOfMonth(LocalDateTime dateTime)
+	{
+		return LocalDateTime.of(LocalDateUtils.lastDayOfMonth(dateTime.toLocalDate()), LocalTime.MAX);
 	}
 
 	public static LocalDateTime firstDayOfYear()
@@ -157,9 +177,19 @@ public abstract class LocalDateTimeUtils
 		return LocalDateTime.of(LocalDateUtils.firstDayOfYear(), LocalTime.MIN);
 	}
 
+	public static LocalDateTime firstDayOfYear(LocalDateTime dateTime)
+	{
+		return LocalDateTime.of(LocalDateUtils.firstDayOfYear(dateTime.toLocalDate()), LocalTime.MIN);
+	}
+
 	public static LocalDateTime lastDayOfYear()
 	{
 		return LocalDateTime.of(LocalDateUtils.lastDayOfYear(), LocalTime.MAX);
+	}
+
+	public static LocalDateTime lastDayOfYear(LocalDateTime dateTime)
+	{
+		return LocalDateTime.of(LocalDateUtils.lastDayOfYear(dateTime.toLocalDate()), LocalTime.MAX);
 	}
 
 	public static LocalDateTime toLocalDateTime(Date date)

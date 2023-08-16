@@ -60,32 +60,62 @@ public abstract class LocalDateUtils
 
 	public static LocalDate firstDayOfWeek()
 	{
-		return LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+		return firstDayOfWeek(LocalDate.now());
+	}
+
+	public static LocalDate firstDayOfWeek(LocalDate date)
+	{
+		return date.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
 	}
 
 	public static LocalDate lastDayOfWeek()
 	{
-		return LocalDate.now().with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+		return lastDayOfWeek(LocalDate.now());
+	}
+
+	public static LocalDate lastDayOfWeek(LocalDate date)
+	{
+		return date.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
 	}
 
 	public static LocalDate firstDayOfMonth()
 	{
-		return LocalDate.now().with(TemporalAdjusters.firstDayOfMonth());
+		return firstDayOfMonth(LocalDate.now());
+	}
+
+	public static LocalDate firstDayOfMonth(LocalDate date)
+	{
+		return date.with(TemporalAdjusters.firstDayOfMonth());
 	}
 
 	public static LocalDate lastDayOfMonth()
 	{
-		return LocalDate.now().with(TemporalAdjusters.lastDayOfMonth());
+		return lastDayOfMonth(LocalDate.now());
+	}
+
+	public static LocalDate lastDayOfMonth(LocalDate date)
+	{
+		return date.with(TemporalAdjusters.lastDayOfMonth());
 	}
 
 	public static LocalDate firstDayOfYear()
 	{
-		return LocalDate.now().with(TemporalAdjusters.firstDayOfYear());
+		return firstDayOfYear(LocalDate.now());
+	}
+
+	public static LocalDate firstDayOfYear(LocalDate date)
+	{
+		return date.with(TemporalAdjusters.firstDayOfYear());
 	}
 
 	public static LocalDate lastDayOfYear()
 	{
-		return LocalDate.now().with(TemporalAdjusters.lastDayOfYear());
+		return lastDayOfYear(LocalDate.now());
+	}
+
+	public static LocalDate lastDayOfYear(LocalDate date)
+	{
+		return date.with(TemporalAdjusters.lastDayOfYear());
 	}
 
 	public static Date toDate(LocalDate localDate)
