@@ -1,9 +1,13 @@
 package com.mizhousoft.commons.lang;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * 工具类
@@ -156,5 +160,25 @@ public abstract class LocalDateTimeUtils
 	public static LocalDateTime lastDayOfYear()
 	{
 		return LocalDateTime.of(LocalDateUtils.lastDayOfYear(), LocalTime.MAX);
+	}
+
+	public static LocalDateTime toLocalDateTime(Date date)
+	{
+		ZoneId zoneId = ZoneId.systemDefault();
+
+		Instant instant = date.toInstant();
+		LocalDateTime localDateTime = instant.atZone(zoneId).toLocalDateTime();
+
+		return localDateTime;
+	}
+
+	public static Date toDate(LocalDateTime dt)
+	{
+		ZoneId zoneId = ZoneId.systemDefault();
+
+		ZonedDateTime zdt = dt.atZone(zoneId);
+		Date date = Date.from(zdt.toInstant());
+
+		return date;
 	}
 }
