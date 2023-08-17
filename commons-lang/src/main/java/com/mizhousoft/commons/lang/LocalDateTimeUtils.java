@@ -132,6 +132,16 @@ public abstract class LocalDateTimeUtils
 		return LocalDateTime.parse(input, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
 	}
 
+	public static LocalDateTime getStartOfDay(LocalDateTime dateTime)
+	{
+		return dateTime.with(LocalTime.MIN);
+	}
+
+	public static LocalDateTime getEndOfDay(LocalDateTime dateTime)
+	{
+		return dateTime.with(LocalTime.MAX);
+	}
+
 	public static LocalDateTime firstDayOfWeek()
 	{
 		return LocalDateTime.of(LocalDateUtils.firstDayOfWeek(), LocalTime.MIN);
