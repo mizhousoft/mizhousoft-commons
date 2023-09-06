@@ -1,6 +1,7 @@
 package com.mizhousoft.commons.lang;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -200,6 +201,14 @@ public abstract class LocalDateTimeUtils
 	public static LocalDateTime lastDayOfYear(LocalDateTime dateTime)
 	{
 		return LocalDateTime.of(LocalDateUtils.lastDayOfYear(dateTime.toLocalDate()), LocalTime.MAX);
+	}
+
+	public static boolean isTheSameDay(LocalDateTime t1, LocalDateTime t2)
+	{
+		LocalDate d1 = t1.toLocalDate();
+		LocalDate d2 = t2.toLocalDate();
+
+		return d1.equals(d2);
 	}
 
 	public static LocalDateTime toLocalDateTime(Date date)
