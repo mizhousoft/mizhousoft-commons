@@ -3,7 +3,9 @@ package com.mizhousoft.commons.lang;
 import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
@@ -15,6 +17,8 @@ import java.util.Date;
  */
 public abstract class LocalDateUtils
 {
+	public static final ZoneOffset DEFAULT_ZONE_OFFSET = ZoneOffset.of("+8");
+
 	public static final String DEFAULT_PATTERN = "yyyy-MM-dd";
 
 	public static String formatYmd(LocalDate localDate)
@@ -116,6 +120,31 @@ public abstract class LocalDateUtils
 	public static LocalDate lastDayOfYear(LocalDate date)
 	{
 		return date.with(TemporalAdjusters.lastDayOfYear());
+	}
+
+	public static long toSecond(LocalDate localDate)
+	{
+		return toSecond(localDate, DEFAULT_ZONE_OFFSET);
+	}
+
+	public static long toSecond(LocalDate localDate, ZoneOffset offset)
+	{
+		if (null == localDate)
+		{
+			return 0;
+		}
+
+		return localDate.toEpochSecond(LocalTime.MIDNIGHT, offset);
+	}
+
+	public static long toTimestamp(LocalDate localDate)
+	{
+		return toSecond(localDate) * 1000;
+	}
+
+	public static long toTimestamp(LocalDate localDate, ZoneOffset offset)
+	{
+		return toSecond(localDate, offset) * 1000;
 	}
 
 	public static Date toDate(LocalDate localDate)
