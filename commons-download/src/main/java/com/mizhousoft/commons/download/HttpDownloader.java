@@ -12,9 +12,9 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.mizhousoft.commons.lang.LocalDateTimeUtils;
 import com.mizhousoft.commons.thread.FixedThreadPool;
 
 /**
@@ -59,12 +60,12 @@ public class HttpDownloader implements Downloader, ProgressListener
 	/**
 	 * 开始时间
 	 */
-	protected Date startTime;
+	protected LocalDateTime startTime;
 
 	/**
 	 * 结束时间
 	 */
-	protected Date endTime;
+	protected LocalDateTime endTime;
 
 	/**
 	 * 线程数，默认是计算出来
@@ -409,7 +410,7 @@ public class HttpDownloader implements Downloader, ProgressListener
 		}
 
 		countDownLatch = new CountDownLatch(threadNum);
-		startTime = new Date();
+		startTime = LocalDateTime.now();
 
 		LOG.info("Start to download file, file url is " + fileUrl + '.');
 
@@ -521,8 +522,7 @@ public class HttpDownloader implements Downloader, ProgressListener
 	 * @param fileStatusDatas
 	 * @return
 	 */
-	private boolean isAllThreadStatusDatasMatch(List<ThreadStatusData> threadStatusDatas,
-	        List<ThreadStatusData> fileStatusDatas)
+	private boolean isAllThreadStatusDatasMatch(List<ThreadStatusData> threadStatusDatas, List<ThreadStatusData> fileStatusDatas)
 	{
 		if (threadStatusDatas.size() != fileStatusDatas.size())
 		{
@@ -622,7 +622,7 @@ public class HttpDownloader implements Downloader, ProgressListener
 		}
 		finally
 		{
-			endTime = new Date();
+			endTime = LocalDateTime.now();
 			executorService.shutdownNow();
 		}
 	}
@@ -669,13 +669,13 @@ public class HttpDownloader implements Downloader, ProgressListener
 	 */
 	private void printDownloadStatistics()
 	{
-		long offset = endTime.getTime() - startTime.getTime();
+		long offset = LocalDateTimeUtils.toTimestamp(endTime) - LocalDateTimeUtils.toTimestamp(startTime);
 		long secs = offset / 1000;
 		long rate = fileSize / secs;
 
 		StringBuilder buffer = new StringBuilder();
-		buffer.append("Downloaded ").append(fileSize).append(" bytes in ").append(secs).append(" seconds (")
-		        .append(rate).append(" bytes/s)");
+		buffer.append("Downloaded ").append(fileSize).append(" bytes in ").append(secs).append(" seconds (").append(rate)
+		        .append(" bytes/s)");
 
 		LOG.info(buffer.toString());
 	}
