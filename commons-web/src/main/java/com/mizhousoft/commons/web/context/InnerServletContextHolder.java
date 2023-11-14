@@ -1,6 +1,6 @@
 package com.mizhousoft.commons.web.context;
 
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 
 /**
  * ServletContext容器

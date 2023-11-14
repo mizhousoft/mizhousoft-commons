@@ -4,10 +4,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.servlet.ServletContext;
-
 import com.mizhousoft.commons.io.Resource;
 import com.mizhousoft.commons.io.util.FilePathUtils;
+
+import jakarta.servlet.ServletContext;
 
 /**
  * ServletContext Resource

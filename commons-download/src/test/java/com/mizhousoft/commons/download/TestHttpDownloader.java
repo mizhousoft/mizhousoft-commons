@@ -9,7 +9,7 @@ public class TestHttpDownloader
 {
 	public static void main(String[] args) throws Exception
 	{
-		System.setProperty(org.slf4j.impl.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "INFO");
+		System.setProperty(org.slf4j.simple.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "INFO");
 
 		String url = "";
 		String localFilePath = "E:\\test.zip";
