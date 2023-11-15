@@ -1,22 +1,25 @@
 package com.mizhousoft.commons.restclient.service.impl;
 
 import java.security.KeyStore;
+import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.http.config.Registry;
-import org.apache.http.config.RegistryBuilder;
-import org.apache.http.conn.socket.ConnectionSocketFactory;
-import org.apache.http.conn.socket.PlainConnectionSocketFactory;
-import org.apache.http.conn.ssl.DefaultHostnameVerifier;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.apache.http.ssl.SSLContextBuilder;
-import org.apache.http.ssl.SSLContexts;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
+import org.apache.hc.client5.http.socket.ConnectionSocketFactory;
+import org.apache.hc.client5.http.socket.PlainConnectionSocketFactory;
+import org.apache.hc.client5.http.ssl.DefaultHostnameVerifier;
+import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactory;
+import org.apache.hc.core5.http.URIScheme;
+import org.apache.hc.core5.http.config.Registry;
+import org.apache.hc.core5.http.config.RegistryBuilder;
+import org.apache.hc.core5.http.io.SocketConfig;
+import org.apache.hc.core5.ssl.SSLContextBuilder;
+import org.apache.hc.core5.ssl.SSLContexts;
 
 import com.mizhousoft.commons.restclient.KeyStoreLoader;
 import com.mizhousoft.commons.restclient.RestException;
@@ -37,7 +40,7 @@ public class HttpsRestClientServiceImpl extends HttpRestClientServiceImpl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public CloseableHttpClient createHttpClient() throws RestException
+	public CloseableHttpClient createHttpClient(int readTimeout) throws RestException
 	{
 		try
 		{
@@ -70,9 +73,13 @@ public class HttpsRestClientServiceImpl extends HttpRestClientServiceImpl
 			        new String[] { "TLSv1", "TLSv1.1", "TLSv1.2", "TLSv1.3" }, null, hostnameVerifier);
 
 			Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory> create()
-			        .register("https", sslSocketFactory).register("http", PlainConnectionSocketFactory.getSocketFactory()).build();
+			        .register(URIScheme.HTTPS.id, sslSocketFactory)
+			        .register(URIScheme.HTTP.id, PlainConnectionSocketFactory.getSocketFactory()).build();
+
+			SocketConfig socketConfig = SocketConfig.custom().setSoTimeout(readTimeout, TimeUnit.MILLISECONDS).build();
 
 			PoolingHttpClientConnectionManager connMgr = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
+			connMgr.setDefaultSocketConfig(socketConfig);
 			connMgr.setMaxTotal(200);
 			connMgr.setDefaultMaxPerRoute(50);
 			builder.setConnectionManager(connMgr);

@@ -7,15 +7,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.collections4.MapUtils;
-import org.apache.http.config.Registry;
-import org.apache.http.config.RegistryBuilder;
-import org.apache.http.conn.socket.ConnectionSocketFactory;
-import org.apache.http.conn.socket.PlainConnectionSocketFactory;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
+import org.apache.hc.client5.http.socket.ConnectionSocketFactory;
+import org.apache.hc.client5.http.socket.PlainConnectionSocketFactory;
+import org.apache.hc.core5.http.URIScheme;
+import org.apache.hc.core5.http.config.Registry;
+import org.apache.hc.core5.http.config.RegistryBuilder;
+import org.apache.hc.core5.http.io.SocketConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileSystemResource;
@@ -62,7 +65,7 @@ public class HttpRestClientServiceImpl implements RestClientService
 		}
 		catch (RestClientResponseException e)
 		{
-			throw new RestException(e.getRawStatusCode(), e.getResponseBodyAsString(), e.getMessage(), e);
+			throw new RestException(e.getStatusCode().value(), e.getResponseBodyAsString(), e.getMessage(), e);
 		}
 		catch (Throwable e)
 		{
@@ -102,12 +105,12 @@ public class HttpRestClientServiceImpl implements RestClientService
 			HttpEntity<?> request = new HttpEntity<>(headers);
 			ResponseEntity<T> response = restTemplate.exchange(url, HttpMethod.GET, request, responseType, uriVariables);
 
-			int statusCode = response.getStatusCodeValue();
+			int statusCode = response.getStatusCode().value();
 			if (null == expectStatusCodes || !expectStatusCodes.contains(statusCode))
 			{
 				String body = response.getBody().toString();
 				String message = "Http status code is " + response.getStatusCode() + ", body is " + body;
-				throw new RestException(response.getStatusCodeValue(), body, message, null);
+				throw new RestException(statusCode, body, message, null);
 			}
 
 			return response.getBody();
@@ -118,7 +121,7 @@ public class HttpRestClientServiceImpl implements RestClientService
 		}
 		catch (RestClientResponseException e)
 		{
-			throw new RestException(e.getRawStatusCode(), e.getResponseBodyAsString(), e.getMessage(), e);
+			throw new RestException(e.getStatusCode().value(), e.getResponseBodyAsString(), e.getMessage(), e);
 		}
 		catch (Throwable e)
 		{
@@ -165,7 +168,7 @@ public class HttpRestClientServiceImpl implements RestClientService
 		}
 		catch (RestClientResponseException e)
 		{
-			throw new RestException(e.getRawStatusCode(), e.getResponseBodyAsString(), e.getMessage(), e);
+			throw new RestException(e.getStatusCode().value(), e.getResponseBodyAsString(), e.getMessage(), e);
 		}
 		catch (Throwable e)
 		{
@@ -185,7 +188,7 @@ public class HttpRestClientServiceImpl implements RestClientService
 		}
 		catch (RestClientResponseException e)
 		{
-			throw new RestException(e.getRawStatusCode(), e.getResponseBodyAsString(), e.getMessage(), e);
+			throw new RestException(e.getStatusCode().value(), e.getResponseBodyAsString(), e.getMessage(), e);
 		}
 		catch (Throwable e)
 		{
@@ -216,7 +219,7 @@ public class HttpRestClientServiceImpl implements RestClientService
 		}
 		catch (RestClientResponseException e)
 		{
-			throw new RestException(e.getRawStatusCode(), e.getResponseBodyAsString(), e.getMessage(), e);
+			throw new RestException(e.getStatusCode().value(), e.getResponseBodyAsString(), e.getMessage(), e);
 		}
 		catch (Throwable e)
 		{
@@ -247,7 +250,7 @@ public class HttpRestClientServiceImpl implements RestClientService
 		}
 		catch (RestClientResponseException e)
 		{
-			throw new RestException(e.getRawStatusCode(), e.getResponseBodyAsString(), e.getMessage(), e);
+			throw new RestException(e.getStatusCode().value(), e.getResponseBodyAsString(), e.getMessage(), e);
 		}
 		catch (Throwable e)
 		{
@@ -283,7 +286,7 @@ public class HttpRestClientServiceImpl implements RestClientService
 		}
 		catch (RestClientResponseException e)
 		{
-			throw new RestException(e.getRawStatusCode(), e.getResponseBodyAsString(), e.getMessage(), e);
+			throw new RestException(e.getStatusCode().value(), e.getResponseBodyAsString(), e.getMessage(), e);
 		}
 		catch (Throwable e)
 		{
@@ -324,7 +327,7 @@ public class HttpRestClientServiceImpl implements RestClientService
 		}
 		catch (RestClientResponseException e)
 		{
-			throw new RestException(e.getRawStatusCode(), e.getResponseBodyAsString(), e.getMessage(), e);
+			throw new RestException(e.getStatusCode().value(), e.getResponseBodyAsString(), e.getMessage(), e);
 		}
 		catch (Throwable e)
 		{
@@ -343,8 +346,8 @@ public class HttpRestClientServiceImpl implements RestClientService
 			ResponseEntity<Resource> entity = restTemplate.getForEntity(url, Resource.class);
 			if (!entity.getStatusCode().equals(HttpStatus.OK))
 			{
-				throw new RestException(entity.getStatusCodeValue(), null,
-				        "Download failed, status code is " + entity.getStatusCodeValue() + '.', null);
+				throw new RestException(entity.getStatusCode().value(), null,
+				        "Download failed, status code is " + entity.getStatusCode() + '.', null);
 			}
 
 			InputStream istream = entity.getBody().getInputStream();
@@ -356,7 +359,7 @@ public class HttpRestClientServiceImpl implements RestClientService
 		}
 		catch (RestClientResponseException e)
 		{
-			throw new RestException(e.getRawStatusCode(), e.getResponseBodyAsString(), e.getMessage(), e);
+			throw new RestException(e.getStatusCode().value(), e.getResponseBodyAsString(), e.getMessage(), e);
 		}
 		catch (Throwable e)
 		{
@@ -375,8 +378,8 @@ public class HttpRestClientServiceImpl implements RestClientService
 			ResponseEntity<Resource> entity = restTemplate.postForEntity(url, request, Resource.class);
 			if (!entity.getStatusCode().equals(HttpStatus.OK))
 			{
-				throw new RestException(entity.getStatusCodeValue(), null,
-				        "Download failed, status code is " + entity.getStatusCodeValue() + '.', null);
+				throw new RestException(entity.getStatusCode().value(), null,
+				        "Download failed, status code is " + entity.getStatusCode() + '.', null);
 			}
 
 			InputStream istream = entity.getBody().getInputStream();
@@ -388,7 +391,7 @@ public class HttpRestClientServiceImpl implements RestClientService
 		}
 		catch (RestClientResponseException e)
 		{
-			throw new RestException(e.getRawStatusCode(), e.getResponseBodyAsString(), e.getMessage(), e);
+			throw new RestException(e.getStatusCode().value(), e.getResponseBodyAsString(), e.getMessage(), e);
 		}
 		catch (Throwable e)
 		{
@@ -408,7 +411,7 @@ public class HttpRestClientServiceImpl implements RestClientService
 		}
 		catch (RestClientResponseException e)
 		{
-			throw new RestException(e.getRawStatusCode(), e.getResponseBodyAsString(), e.getMessage(), e);
+			throw new RestException(e.getStatusCode().value(), e.getResponseBodyAsString(), e.getMessage(), e);
 		}
 		catch (Throwable e)
 		{
@@ -444,13 +447,12 @@ public class HttpRestClientServiceImpl implements RestClientService
 		{
 			LOG.info("Start to init restclient service.");
 
-			CloseableHttpClient httpClient = createHttpClient();
+			CloseableHttpClient httpClient = createHttpClient(readTimeout);
 
-			HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+			HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
 			requestFactory.setHttpClient(httpClient);
 			requestFactory.setConnectionRequestTimeout(10000);
 			requestFactory.setConnectTimeout(connectTimeout);
-			requestFactory.setReadTimeout(readTimeout);
 
 			restTemplate = new RestTemplate();
 			restTemplate.setRequestFactory(requestFactory);
@@ -485,16 +487,19 @@ public class HttpRestClientServiceImpl implements RestClientService
 	 * 
 	 * @return
 	 */
-	public CloseableHttpClient createHttpClient()
+	public CloseableHttpClient createHttpClient(int readTimeout)
 	{
 		try
 		{
 			HttpClientBuilder builder = HttpClientBuilder.create();
 
 			Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory> create()
-			        .register("http", PlainConnectionSocketFactory.getSocketFactory()).build();
+			        .register(URIScheme.HTTP.id, PlainConnectionSocketFactory.getSocketFactory()).build();
+
+			SocketConfig socketConfig = SocketConfig.custom().setSoTimeout(readTimeout, TimeUnit.MILLISECONDS).build();
 
 			PoolingHttpClientConnectionManager connMgr = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
+			connMgr.setDefaultSocketConfig(socketConfig);
 			connMgr.setMaxTotal(200);
 			connMgr.setDefaultMaxPerRoute(50);
 			builder.setConnectionManager(connMgr);

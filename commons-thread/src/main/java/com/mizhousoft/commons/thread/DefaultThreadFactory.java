@@ -27,8 +27,7 @@ public class DefaultThreadFactory implements ThreadFactory
 	public DefaultThreadFactory(String prefix)
 	{
 		mPrefix = prefix + "-thread-";
-		SecurityManager s = System.getSecurityManager();
-		mGroup = (s == null) ? Thread.currentThread().getThreadGroup() : s.getThreadGroup();
+		mGroup = Thread.currentThread().getThreadGroup();
 	}
 
 	/**
