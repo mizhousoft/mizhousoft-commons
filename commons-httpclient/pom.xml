@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.mizhousoft.commons</groupId>
+		<artifactId>commons-parent</artifactId>
+		<version>2.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>commons-httpclient</artifactId>
+	<packaging>jar</packaging>
+	<name>commons-httpclient</name>
+	<description></description>
+
+	<properties>
+		<maven.deploy.skip>true</maven.deploy.skip>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.mizhousoft.commons</groupId>
+			<artifactId>commons-data</artifactId>
+			<version>${commons.version}</version>
+		</dependency>
+		<dependency>
+	        <groupId>com.konghq</groupId>
+	        <artifactId>unirest-java-core</artifactId>
+			<scope>provided</scope>
+	    </dependency>
+	    <dependency>
+	        <groupId>com.konghq</groupId>
+	        <artifactId>unirest-objectmapper-jackson</artifactId>
+			<scope>provided</scope>
+	    </dependency>
+	</dependencies>
+
+</project>

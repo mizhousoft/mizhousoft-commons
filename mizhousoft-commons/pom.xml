@@ -89,6 +89,11 @@
 			<artifactId>commons-okhttp-digest</artifactId>
 			<version>${commons.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.mizhousoft.commons</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>${commons.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -122,6 +127,7 @@
 									<include>com.mizhousoft.commons:commons-qrcode</include>
 									<include>com.mizhousoft.commons:commons-mail</include>
 									<include>com.mizhousoft.commons:commons-okhttp-digest</include>
+									<include>com.mizhousoft.commons:commons-httpclient</include>
 								</includes>
 							</artifactSet>
 						</configuration>
@@ -139,7 +145,7 @@
 						</goals>
 						<configuration>
 							<failOnError>false</failOnError>
-							<additionalparam>-Xdoclint:none</additionalparam>
+							<additionalJOption>-Xdoclint:none</additionalJOption>
 						</configuration>
 					</execution>
 				</executions>

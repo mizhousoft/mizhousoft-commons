@@ -55,6 +55,7 @@
 		<module>commons-qrcode</module>
 		<module>commons-mail</module>
 		<module>commons-okhttp-digest</module>
+		<module>commons-httpclient</module>
 		<module>mizhousoft-commons</module>
 	</modules>
 
