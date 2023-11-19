@@ -50,7 +50,6 @@
 		<module>commons-thread</module>
 		<module>commons-mapper</module>
 		<module>commons-web</module>
-		<module>commons-restclient</module>
 		<module>commons-download</module>
 		<module>commons-qrcode</module>
 		<module>commons-mail</module>

@@ -66,11 +66,6 @@
 		</dependency>
 		<dependency>
 			<groupId>com.mizhousoft.commons</groupId>
-			<artifactId>commons-restclient</artifactId>
-			<version>${commons.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.mizhousoft.commons</groupId>
 			<artifactId>commons-download</artifactId>
 			<version>${commons.version}</version>
 		</dependency>
@@ -122,7 +117,6 @@
 									<include>com.mizhousoft.commons:commons-mapper</include>
 									<include>com.mizhousoft.commons:commons-web</include>
 									<include>com.mizhousoft.commons:commons-json</include>
-									<include>com.mizhousoft.commons:commons-restclient</include>
 									<include>com.mizhousoft.commons:commons-download</include>
 									<include>com.mizhousoft.commons:commons-qrcode</include>
 									<include>com.mizhousoft.commons:commons-mail</include>
