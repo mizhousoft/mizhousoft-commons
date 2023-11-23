@@ -1,8 +1,5 @@
 package com.mizhousoft.commons.download;
 
-import java.io.InputStream;
-import java.security.KeyStore;
-
 /**
  * Main
  *
@@ -12,15 +9,10 @@ public class TestHttpsDownloader
 {
 	public static void main(String[] args) throws Exception
 	{
-		String url = "";
-		String localFilePath = "E:\\test.zip";
+		String url = "https://xcsqapp.com/imgs/c1.jpg";
+		String localFilePath = "c:\\work\\test.jpg";
 
-		KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-		char[] passwd = "EydKOgDsXm3BxT9qdQDcFA".toCharArray();
-		InputStream istream = TestHttpsDownloader.class.getClassLoader().getResourceAsStream("ota.truststore");
-		trustStore.load(istream, passwd);
-
-		HttpsDownloader downloader = new HttpsDownloader("v48289", url, localFilePath, trustStore);
+		HttpsDownloader downloader = new HttpsDownloader("v48289", url, localFilePath);
 		downloader.start();
 	}
 }
