@@ -74,18 +74,6 @@ public abstract class Asserts
 		}
 	}
 
-	public static void notSize(String value, int min, int max, String errorCode) throws AssertionException
-	{
-		String data = value.trim();
-
-		if (data.length() < min || data.length() > max)
-		{
-			String[] params = { String.valueOf(min), String.valueOf(max) };
-
-			throw new AssertionException(errorCode, params, "Value is illegal, value is " + value + ".");
-		}
-	}
-
 	public static void notMatch(String value, String regex, String errorCode) throws AssertionException
 	{
 		try
@@ -100,6 +88,32 @@ public abstract class Asserts
 		catch (PatternSyntaxException e)
 		{
 			throw new AssertionException(errorCode, "Pattern is illegal, regex is " + regex + ".");
+		}
+	}
+
+	public static void size(String value, int min, int max, String errorCode) throws AssertionException
+	{
+		if (null == value)
+		{
+			return;
+		}
+
+		String data = value.trim();
+		if (data.length() < min || data.length() > max)
+		{
+			String[] params = { String.valueOf(min), String.valueOf(max) };
+
+			throw new AssertionException(errorCode, params, "Value is illegal, value is " + value + ".");
+		}
+	}
+
+	public static void range(int value, int min, int max, String errorCode) throws AssertionException
+	{
+		if (value < min || value > max)
+		{
+			String[] params = { String.valueOf(min), String.valueOf(max) };
+
+			throw new AssertionException(errorCode, params, "Value is illegal, value is " + value + ".");
 		}
 	}
 
