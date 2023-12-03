@@ -26,6 +26,16 @@ public abstract class Asserts
 		}
 	}
 
+	public static void notBlank(String object, String errorCode) throws AssertionException
+	{
+		notNull(object, errorCode);
+
+		if (object.trim().length() == 0)
+		{
+			throw new AssertionException(errorCode, "Object is blank.");
+		}
+	}
+
 	public static <T> void notEmpty(T[] array, String errorCode) throws AssertionException
 	{
 		if (ArrayUtils.isEmpty(array))
