@@ -86,6 +86,11 @@ public abstract class Asserts
 
 	public static void notMatch(String value, String regex, String errorCode) throws AssertionException
 	{
+		if (value == null)
+		{
+			return;
+		}
+
 		try
 		{
 			Pattern pattern = Pattern.compile(regex);
