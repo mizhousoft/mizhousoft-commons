@@ -151,4 +151,24 @@ public abstract class Asserts
 			throw new AssertionException(errorCode, params, "Value is illegal, value is " + value + ".");
 		}
 	}
+
+	public static void min(long value, int min, String errorCode) throws AssertionException
+	{
+		if (value < min)
+		{
+			String[] params = { String.valueOf(min) };
+
+			throw new AssertionException(errorCode, params, "Value is illegal, value is " + value + ".");
+		}
+	}
+
+	public static void max(long value, int max, String errorCode) throws AssertionException
+	{
+		if (value > max)
+		{
+			String[] params = { String.valueOf(max) };
+
+			throw new AssertionException(errorCode, params, "Value is illegal, value is " + value + ".");
+		}
+	}
 }
