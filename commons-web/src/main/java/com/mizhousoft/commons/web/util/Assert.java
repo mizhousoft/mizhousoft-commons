@@ -16,49 +16,49 @@ import com.mizhousoft.commons.web.AssertionException;
  */
 public abstract class Assert
 {
-	public static <T> void notNull(T object, String errorCode, String fieldName) throws AssertionException
+	public static <T> void notNull(String fieldName, T value, String errorCode) throws AssertionException
 	{
-		if (object == null)
+		if (value == null)
 		{
 			throw new AssertionException(errorCode, fieldName + " is null.");
 		}
 	}
 
-	public static void notBlank(String object, String errorCode, String fieldName) throws AssertionException
+	public static void notBlank(String fieldName, String value, String errorCode) throws AssertionException
 	{
-		notNull(object, errorCode, fieldName);
+		notNull(fieldName, value, errorCode);
 
-		if (object.trim().length() == 0)
+		if (value.trim().length() == 0)
 		{
 			throw new AssertionException(errorCode, fieldName + " is blank.");
 		}
 	}
 
-	public static <T> void notEmpty(T[] array, String errorCode, String fieldName) throws AssertionException
+	public static <T> void notEmpty(String fieldName, T[] values, String errorCode) throws AssertionException
 	{
-		if (null == array || array.length == 0)
+		if (null == values || values.length == 0)
 		{
 			throw new AssertionException(errorCode, fieldName + " is empty.");
 		}
 	}
 
-	public static <T> void notEmpty(Collection<T> collection, String errorCode, String fieldName) throws AssertionException
+	public static <T> void notEmpty(String fieldName, Collection<T> values, String errorCode) throws AssertionException
 	{
-		if (collection == null || collection.isEmpty())
+		if (values == null || values.isEmpty())
 		{
 			throw new AssertionException(errorCode, fieldName + " is empty.");
 		}
 	}
 
-	public static void notEmpty(Map<?, ?> map, String errorCode, String fieldName) throws AssertionException
+	public static void notEmpty(String fieldName, Map<?, ?> values, String errorCode) throws AssertionException
 	{
-		if (map == null || map.isEmpty())
+		if (values == null || values.isEmpty())
 		{
 			throw new AssertionException(errorCode, fieldName + " is empty.");
 		}
 	}
 
-	public static <T> void notContain(T value, Collection<T> values, String errorCode, String fieldName) throws AssertionException
+	public static <T> void notContain(String fieldName, T value, Collection<T> values, String errorCode) throws AssertionException
 	{
 		if (!values.contains(value))
 		{
@@ -66,7 +66,7 @@ public abstract class Assert
 		}
 	}
 
-	public static void notEquals(int actualValue, int expectedValue, String errorCode, String fieldName) throws AssertionException
+	public static void notEquals(String fieldName, int actualValue, int expectedValue, String errorCode) throws AssertionException
 	{
 		if (actualValue != expectedValue)
 		{
@@ -75,7 +75,7 @@ public abstract class Assert
 		}
 	}
 
-	public static void notEquals(String actualValue, String expectedValue, String errorCode, String fieldName) throws AssertionException
+	public static void notEquals(String fieldName, String actualValue, String expectedValue, String errorCode) throws AssertionException
 	{
 		if (!StringUtils.equals(actualValue, expectedValue))
 		{
@@ -83,7 +83,7 @@ public abstract class Assert
 		}
 	}
 
-	public static void notMatch(String value, String regex, String errorCode, String fieldName) throws AssertionException
+	public static void notMatch(String fieldName, String value, String regex, String errorCode) throws AssertionException
 	{
 		if (value == null)
 		{
@@ -105,7 +105,7 @@ public abstract class Assert
 		}
 	}
 
-	public static void size(String value, int min, int max, String errorCode, String fieldName) throws AssertionException
+	public static void size(String fieldName, String value, int min, int max, String errorCode) throws AssertionException
 	{
 		if (null == value)
 		{
@@ -122,7 +122,7 @@ public abstract class Assert
 		}
 	}
 
-	public static void range(int value, int min, int max, String errorCode, String fieldName) throws AssertionException
+	public static void range(String fieldName, int value, int min, int max, String errorCode) throws AssertionException
 	{
 		if (value < min || value > max)
 		{
@@ -133,7 +133,7 @@ public abstract class Assert
 		}
 	}
 
-	public static void min(int value, int min, String errorCode, String fieldName) throws AssertionException
+	public static void min(String fieldName, int value, int min, String errorCode) throws AssertionException
 	{
 		if (value < min)
 		{
@@ -144,7 +144,7 @@ public abstract class Assert
 		}
 	}
 
-	public static void max(int value, int max, String errorCode, String fieldName) throws AssertionException
+	public static void max(String fieldName, int value, int max, String errorCode) throws AssertionException
 	{
 		if (value > max)
 		{
@@ -154,7 +154,7 @@ public abstract class Assert
 		}
 	}
 
-	public static void min(long value, int min, String errorCode, String fieldName) throws AssertionException
+	public static void min(String fieldName, long value, int min, String errorCode) throws AssertionException
 	{
 		if (value < min)
 		{
@@ -165,7 +165,7 @@ public abstract class Assert
 		}
 	}
 
-	public static void max(long value, int max, String errorCode, String fieldName) throws AssertionException
+	public static void max(String fieldName, long value, int max, String errorCode) throws AssertionException
 	{
 		if (value > max)
 		{
