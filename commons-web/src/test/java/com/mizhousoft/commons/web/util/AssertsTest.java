@@ -16,7 +16,7 @@ public class AssertsTest
 	{
 		try
 		{
-			Asserts.notMatch("test", "^[a-zA-Z0-9-\\u4e00-\\u9fa5]+$", "commons.web.value.error");
+			Assert.notMatch("test", "^[a-zA-Z0-9-\\u4e00-\\u9fa5]+$", "commons.web.value.error");
 		}
 		catch (AssertionException e)
 		{
@@ -25,7 +25,7 @@ public class AssertsTest
 
 		try
 		{
-			Asserts.notMatch("te&st", "^[a-zA-Z0-9-\\u4e00-\\u9fa5]+$", "commons.web.value.error");
+			Assert.notMatch("te&st", "^[a-zA-Z0-9-\\u4e00-\\u9fa5]+$", "commons.web.value.error");
 
 			Assertions.fail();
 		}

@@ -16,7 +16,7 @@ import com.mizhousoft.commons.web.AssertionException;
  * 断言
  *
  */
-public abstract class Asserts
+public abstract class Assert
 {
 	public static <T> void notNull(T object, String errorCode) throws AssertionException
 	{
