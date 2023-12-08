@@ -6,9 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.util.CollectionUtils;
 
 import com.mizhousoft.commons.web.AssertionException;
 
@@ -18,73 +16,74 @@ import com.mizhousoft.commons.web.AssertionException;
  */
 public abstract class Assert
 {
-	public static <T> void notNull(T object, String errorCode) throws AssertionException
+	public static <T> void notNull(T object, String errorCode, String fieldName) throws AssertionException
 	{
 		if (object == null)
 		{
-			throw new AssertionException(errorCode, "Object is null.");
+			throw new AssertionException(errorCode, fieldName + " is null.");
 		}
 	}
 
-	public static void notBlank(String object, String errorCode) throws AssertionException
+	public static void notBlank(String object, String errorCode, String fieldName) throws AssertionException
 	{
-		notNull(object, errorCode);
+		notNull(object, errorCode, fieldName);
 
 		if (object.trim().length() == 0)
 		{
-			throw new AssertionException(errorCode, "Object is blank.");
+			throw new AssertionException(errorCode, fieldName + " is blank.");
 		}
 	}
 
-	public static <T> void notEmpty(T[] array, String errorCode) throws AssertionException
+	public static <T> void notEmpty(T[] array, String errorCode, String fieldName) throws AssertionException
 	{
-		if (ArrayUtils.isEmpty(array))
+		if (null == array || array.length == 0)
 		{
-			throw new AssertionException(errorCode, "Array is null.");
+			throw new AssertionException(errorCode, fieldName + " is empty.");
 		}
 	}
 
-	public static <T> void notEmpty(Collection<T> collection, String errorCode) throws AssertionException
+	public static <T> void notEmpty(Collection<T> collection, String errorCode, String fieldName) throws AssertionException
 	{
-		if (CollectionUtils.isEmpty(collection))
+		if (collection == null || collection.isEmpty())
 		{
-			throw new AssertionException(errorCode, "Collection is null.");
+			throw new AssertionException(errorCode, fieldName + " is empty.");
 		}
 	}
 
-	public static void notEmpty(Map<?, ?> map, String errorCode) throws AssertionException
+	public static void notEmpty(Map<?, ?> map, String errorCode, String fieldName) throws AssertionException
 	{
-		if (CollectionUtils.isEmpty(map))
+		if (map == null || map.isEmpty())
 		{
-			throw new AssertionException(errorCode, "Map is null.");
+			throw new AssertionException(errorCode, fieldName + " is empty.");
 		}
 	}
 
-	public static <T> void notContain(T value, Collection<T> values, String errorCode) throws AssertionException
+	public static <T> void notContain(T value, Collection<T> values, String errorCode, String fieldName) throws AssertionException
 	{
 		if (!values.contains(value))
 		{
-			throw new AssertionException(errorCode, "Collection does not contain " + value + ".");
+			throw new AssertionException(errorCode, fieldName + " is not in the collection.");
 		}
 	}
 
-	public static void notEquals(int actualValue, int expectedValue, String errorCode) throws AssertionException
+	public static void notEquals(int actualValue, int expectedValue, String errorCode, String fieldName) throws AssertionException
 	{
 		if (actualValue != expectedValue)
 		{
-			throw new AssertionException(errorCode, "Value is illegal, actual value is " + actualValue + ".");
+			throw new AssertionException(errorCode,
+			        fieldName + " is not equal to the expected value, actual value is " + actualValue + '.');
 		}
 	}
 
-	public static void notEquals(String actualValue, String expectedValue, String errorCode) throws AssertionException
+	public static void notEquals(String actualValue, String expectedValue, String errorCode, String fieldName) throws AssertionException
 	{
 		if (!StringUtils.equals(actualValue, expectedValue))
 		{
-			throw new AssertionException(errorCode, "Value is illegal, actual value is " + actualValue + ".");
+			throw new AssertionException(errorCode, fieldName + " is not equal to the expected value.");
 		}
 	}
 
-	public static void notMatch(String value, String regex, String errorCode) throws AssertionException
+	public static void notMatch(String value, String regex, String errorCode, String fieldName) throws AssertionException
 	{
 		if (value == null)
 		{
@@ -97,7 +96,7 @@ public abstract class Assert
 			Matcher m = pattern.matcher(value);
 			if (!m.matches())
 			{
-				throw new AssertionException(errorCode, "Value is illegal.");
+				throw new AssertionException(errorCode, fieldName + " is illegal.");
 			}
 		}
 		catch (PatternSyntaxException e)
@@ -106,7 +105,7 @@ public abstract class Assert
 		}
 	}
 
-	public static void size(String value, int min, int max, String errorCode) throws AssertionException
+	public static void size(String value, int min, int max, String errorCode, String fieldName) throws AssertionException
 	{
 		if (null == value)
 		{
@@ -118,57 +117,61 @@ public abstract class Assert
 		{
 			String[] params = { String.valueOf(min), String.valueOf(max) };
 
-			throw new AssertionException(errorCode, params, "Value is illegal, value is " + value + ".");
+			throw new AssertionException(errorCode, params,
+			        fieldName + " length is not in the " + min + " to " + max + " range, length is " + value.length() + '.');
 		}
 	}
 
-	public static void range(int value, int min, int max, String errorCode) throws AssertionException
+	public static void range(int value, int min, int max, String errorCode, String fieldName) throws AssertionException
 	{
 		if (value < min || value > max)
 		{
 			String[] params = { String.valueOf(min), String.valueOf(max) };
 
-			throw new AssertionException(errorCode, params, "Value is illegal, value is " + value + ".");
+			throw new AssertionException(errorCode, params,
+			        fieldName + " is not in the " + min + " to " + max + " range, value is " + value + '.');
 		}
 	}
 
-	public static void min(int value, int min, String errorCode) throws AssertionException
+	public static void min(int value, int min, String errorCode, String fieldName) throws AssertionException
 	{
 		if (value < min)
 		{
 			String[] params = { String.valueOf(min) };
 
-			throw new AssertionException(errorCode, params, "Value is illegal, value is " + value + ".");
+			throw new AssertionException(errorCode, params,
+			        fieldName + " is smaller than the maximum " + min + ", value is " + value + '.');
 		}
 	}
 
-	public static void max(int value, int max, String errorCode) throws AssertionException
+	public static void max(int value, int max, String errorCode, String fieldName) throws AssertionException
 	{
 		if (value > max)
 		{
 			String[] params = { String.valueOf(max) };
 
-			throw new AssertionException(errorCode, params, "Value is illegal, value is " + value + ".");
+			throw new AssertionException(errorCode, params, fieldName + " is larger than the maximum " + max + ", value is " + value + '.');
 		}
 	}
 
-	public static void min(long value, int min, String errorCode) throws AssertionException
+	public static void min(long value, int min, String errorCode, String fieldName) throws AssertionException
 	{
 		if (value < min)
 		{
 			String[] params = { String.valueOf(min) };
 
-			throw new AssertionException(errorCode, params, "Value is illegal, value is " + value + ".");
+			throw new AssertionException(errorCode, params,
+			        fieldName + " is smaller than the maximum " + min + ", value is " + value + '.');
 		}
 	}
 
-	public static void max(long value, int max, String errorCode) throws AssertionException
+	public static void max(long value, int max, String errorCode, String fieldName) throws AssertionException
 	{
 		if (value > max)
 		{
 			String[] params = { String.valueOf(max) };
 
-			throw new AssertionException(errorCode, params, "Value is illegal, value is " + value + ".");
+			throw new AssertionException(errorCode, params, fieldName + " is larger than the maximum " + max + ", value is " + value + '.');
 		}
 	}
 }
