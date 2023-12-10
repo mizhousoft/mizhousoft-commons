@@ -174,4 +174,146 @@ public abstract class Assert
 			throw new AssertionException(errorCode, params, fieldName + " is larger than the maximum " + max + ", value is " + value + '.');
 		}
 	}
+
+	public static <T> void notNull(T value, String message) throws AssertionException
+	{
+		if (value == null)
+		{
+			throw new AssertionException(message);
+		}
+	}
+
+	public static void notBlank(String value, String message) throws AssertionException
+	{
+		notNull(value, message);
+
+		if (value.trim().length() == 0)
+		{
+			throw new AssertionException(message);
+		}
+	}
+
+	public static <T> void notEmpty(T[] values, String message) throws AssertionException
+	{
+		if (null == values || values.length == 0)
+		{
+			throw new AssertionException(message);
+		}
+	}
+
+	public static <T> void notEmpty(Collection<T> values, String message) throws AssertionException
+	{
+		if (values == null || values.isEmpty())
+		{
+			throw new AssertionException(message);
+		}
+	}
+
+	public static void notEmpty(Map<?, ?> values, String message) throws AssertionException
+	{
+		if (values == null || values.isEmpty())
+		{
+			throw new AssertionException(message);
+		}
+	}
+
+	public static <T> void notContain(T value, Collection<T> values, String message) throws AssertionException
+	{
+		if (!values.contains(value))
+		{
+			throw new AssertionException(message);
+		}
+	}
+
+	public static void notEquals(int actualValue, int expectedValue, String message) throws AssertionException
+	{
+		if (actualValue != expectedValue)
+		{
+			throw new AssertionException(message);
+		}
+	}
+
+	public static void notEquals(String actualValue, String expectedValue, String message) throws AssertionException
+	{
+		if (!StringUtils.equals(actualValue, expectedValue))
+		{
+			throw new AssertionException(message);
+		}
+	}
+
+	public static void notMatch(String value, String regex, String message) throws AssertionException
+	{
+		if (value == null)
+		{
+			return;
+		}
+
+		try
+		{
+			Pattern pattern = Pattern.compile(regex);
+			Matcher m = pattern.matcher(value);
+			if (!m.matches())
+			{
+				throw new AssertionException(message);
+			}
+		}
+		catch (PatternSyntaxException e)
+		{
+			throw new AssertionException("Pattern is illegal, regex is " + regex + ".");
+		}
+	}
+
+	public static void size(String value, int min, int max, String message) throws AssertionException
+	{
+		if (null == value)
+		{
+			return;
+		}
+
+		String data = value.trim();
+		if (data.length() < min || data.length() > max)
+		{
+			throw new AssertionException(message);
+		}
+	}
+
+	public static void range(int value, int min, int max, String message) throws AssertionException
+	{
+		if (value < min || value > max)
+		{
+			throw new AssertionException(message);
+		}
+	}
+
+	public static void min(int value, int min, String message) throws AssertionException
+	{
+		if (value < min)
+		{
+			throw new AssertionException(message);
+		}
+	}
+
+	public static void max(int value, int max, String message) throws AssertionException
+	{
+		if (value > max)
+		{
+			throw new AssertionException(message);
+		}
+	}
+
+	public static void min(long value, int min, String message) throws AssertionException
+	{
+		if (value < min)
+		{
+			throw new AssertionException(message);
+		}
+	}
+
+	public static void max(long value, int max, String message) throws AssertionException
+	{
+		if (value > max)
+		{
+			throw new AssertionException(message);
+		}
+	}
 }
