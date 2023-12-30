@@ -20,7 +20,7 @@ public interface CrudMapper<T, ID extends Serializable> extends BaseMapper<T, ID
 	 * @param entity
 	 * @return
 	 */
-	<S extends T> void save(S entity);
+	<S extends T> int save(S entity);
 
 	/**
 	 * 更新对象
@@ -28,14 +28,14 @@ public interface CrudMapper<T, ID extends Serializable> extends BaseMapper<T, ID
 	 * @param entity
 	 * @return
 	 */
-	<S extends T> void update(S entity);
+	<S extends T> int update(S entity);
 
 	/**
 	 * 根据ID删除对象
 	 * 
 	 * @param id
 	 */
-	void delete(ID id);
+	int delete(ID id);
 
 	/**
 	 * 根据ID查找
