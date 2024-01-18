@@ -25,6 +25,16 @@
 			<version>${commons.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>com.mizhousoft.commons</groupId>
+			<artifactId>commons-json</artifactId>
+			<version>${commons.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
 			<scope>provided</scope>

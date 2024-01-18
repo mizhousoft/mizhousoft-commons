@@ -68,6 +68,20 @@ public abstract class JSONUtils
 	/**
 	 * 解析字符串成对象
 	 * 
+	 * @param <T>
+	 * @param input
+	 * @param clazz
+	 * @return
+	 * @throws JSONException
+	 */
+	public static <T> T parseWithClass(String input, Class<T> clazz) throws JSONException
+	{
+		return parse(input, clazz);
+	}
+
+	/**
+	 * 解析字符串成对象
+	 * 
 	 * @param input
 	 * @param valueTypeRef
 	 * @return
@@ -94,6 +108,20 @@ public abstract class JSONUtils
 		{
 			throw new JSONException("String deserialize to Object failed.", e);
 		}
+	}
+
+	/**
+	 * 解析字符串成对象
+	 * 
+	 * @param <T>
+	 * @param input
+	 * @param valueTypeRef
+	 * @return
+	 * @throws JSONException
+	 */
+	public static <T> T parseWithTypeRef(String input, TypeReference<T> valueTypeRef) throws JSONException
+	{
+		return parse(input, valueTypeRef);
 	}
 
 	/**
