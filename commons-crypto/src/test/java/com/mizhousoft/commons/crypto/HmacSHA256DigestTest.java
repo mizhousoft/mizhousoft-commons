@@ -12,7 +12,7 @@ import com.mizhousoft.commons.lang.HexUtils;
  *
  * @version
  */
-public class TestHmacSHA256Digest
+public class HmacSHA256DigestTest
 {
 	@Test
 	public void testHash()

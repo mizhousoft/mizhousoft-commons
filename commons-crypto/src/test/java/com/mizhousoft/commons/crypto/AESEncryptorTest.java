@@ -12,7 +12,7 @@ import com.mizhousoft.commons.lang.HexUtils;
  *
  * @version
  */
-public class TestAESEncryptor
+public class AESEncryptorTest
 {
 	@Test
 	public void testEncrypt()

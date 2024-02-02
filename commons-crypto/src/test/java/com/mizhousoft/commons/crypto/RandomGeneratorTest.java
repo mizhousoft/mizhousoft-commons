@@ -10,7 +10,7 @@ import com.mizhousoft.commons.lang.HexUtils;
  *
  * @version
  */
-public class TestRandomGenerator
+public class RandomGeneratorTest
 {
 	@Test
 	public void testGenerateKey()

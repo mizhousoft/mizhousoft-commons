@@ -10,7 +10,7 @@ import com.mizhousoft.commons.crypto.generator.PBEPasswdGenerator;
  *
  * @version
  */
-public class TestPBEPasswdGeneratorImpl
+public class PBEPasswdGeneratorImplTest
 {
 	@Test
 	public void testDerivePasswd()
