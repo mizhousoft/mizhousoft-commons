@@ -64,6 +64,10 @@ public class CookieUtils
 	public static void removeCookie(HttpServletRequest request, HttpServletResponse response, Cookie cookie)
 	{
 		String path = WebUtils.getContextPath(request);
+		if ("".equals(path))
+		{
+			path = "/";
+		}
 
 		cookie.setPath(path);
 		cookie.setValue("");
