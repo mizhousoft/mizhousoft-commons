@@ -10,7 +10,7 @@ import java.io.OutputStream;
 import org.apache.commons.compress.archivers.zip.Zip64Mode;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
-import org.apache.commons.compress.utils.IOUtils;
+import org.apache.commons.io.IOUtils;
 
 import com.mizhousoft.commons.io.ZipException;
 import com.mizhousoft.commons.lang.CharEncoding;
