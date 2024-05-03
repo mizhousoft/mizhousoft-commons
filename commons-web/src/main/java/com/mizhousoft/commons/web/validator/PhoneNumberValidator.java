@@ -31,7 +31,17 @@ public abstract class PhoneNumberValidator implements Validator
 
 	public static void validate(String value) throws AssertionException
 	{
-		Assert.notMatch(value, REGEX, "PhoneNumber is illegal.");
+		try
+		{
+			// 转为长整型写入异常信息是预防输入攻击
+			Long phoneNumber = Long.valueOf(value);
+
+			Assert.notMatch(value, REGEX, "PhoneNumber is illegal, value is " + phoneNumber);
+		}
+		catch (NumberFormatException e)
+		{
+			throw new AssertionException("PhoneNumber is illegal.");
+		}
 	}
 
 	public static void validate(String fieldName, String value, String errorCode) throws AssertionException
