@@ -6,8 +6,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 
+import com.mizhousoft.commons.lang.CharEncoding;
 import com.mizhousoft.commons.web.AssertionException;
 
 /**
@@ -96,7 +98,9 @@ public abstract class Assert
 			Matcher m = pattern.matcher(value);
 			if (!m.matches())
 			{
-				throw new AssertionException(errorCode, fieldName + " is illegal.");
+				String errorValue = Base64.encodeBase64String(value.getBytes(CharEncoding.UTF8));
+
+				throw new AssertionException(errorCode, fieldName + " is illegal, value is " + errorValue);
 			}
 		}
 		catch (PatternSyntaxException e)
@@ -118,7 +122,7 @@ public abstract class Assert
 			String[] params = { String.valueOf(min), String.valueOf(max) };
 
 			throw new AssertionException(errorCode, params,
-			        fieldName + " length is not in the " + min + " to " + max + " range, length is " + value.length() + '.');
+			        fieldName + " length is not in the " + min + " to " + max + " range, length is " + data.length() + '.');
 		}
 	}
 
