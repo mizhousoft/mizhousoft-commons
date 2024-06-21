@@ -41,4 +41,11 @@ public interface Pageable
 	 * @return
 	 */
 	Sort getSort();
+
+	/**
+	 * 获取排序字符串
+	 * 
+	 * @return
+	 */
+	String getSortString();
 }

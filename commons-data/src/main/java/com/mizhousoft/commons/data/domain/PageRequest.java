@@ -13,6 +13,20 @@ public class PageRequest extends AbstractPageRequest
 	private Sort sort;
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getSortString()
+	{
+		if (null != sort)
+		{
+			return sort.getSortString();
+		}
+
+		return null;
+	}
+
+	/**
 	 * 获取排序
 	 * 
 	 * @return

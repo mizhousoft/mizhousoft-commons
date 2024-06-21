@@ -2,8 +2,11 @@ package com.mizhousoft.commons.data.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 排序选项类
@@ -11,32 +14,29 @@ import java.util.List;
  * 
  * @version
  */
-public class Sort implements Iterable<Sort.Property>, Serializable
+public class Sort implements Serializable
 {
 	private static final long serialVersionUID = -8484744770481449860L;
 
 	// 默认的排序
 	public static final Direction DEFAULT_DIRECTION = Direction.ASC;
 
-	// 排序属性
-	private List<Property> properties;
-
-	// 排序
-	private Direction order;
+	// 排序列表
+	private List<Order> orders;
 
 	/**
 	 * 构造函数
 	 * 
-	 * @param properties
+	 * @param orders
 	 */
-	public Sort(List<Property> properties)
+	public Sort(List<Order> orders)
 	{
-		if (null == properties || properties.isEmpty())
+		if (null == orders || orders.isEmpty())
 		{
-			throw new IllegalArgumentException("You have to provide at least one sort property to sort by!");
+			throw new IllegalArgumentException("You have to provide at least one sort order to sort by!");
 		}
 
-		this.properties = properties;
+		this.orders = orders;
 	}
 
 	/**
@@ -52,33 +52,56 @@ public class Sort implements Iterable<Sort.Property>, Serializable
 	/**
 	 * 构造函数
 	 * 
-	 * @param order
+	 * @param direction
 	 * @param properties
 	 */
-	public Sort(Direction order, String... properties)
+	public Sort(Direction direction, String... properties)
 	{
 		if (null == properties || 0 == properties.length)
 		{
 			throw new IllegalArgumentException("You have to provide at least one property to sort by!");
 		}
 
-		this.properties = new ArrayList<Property>(properties.length);
-		this.order = null == order ? DEFAULT_DIRECTION : order;
-
+		this.orders = new ArrayList<Order>(properties.length);
 		for (String propertyName : properties)
 		{
-			this.properties.add(new Property(order, propertyName));
+			this.orders.add(new Order(direction, propertyName));
 		}
 	}
 
 	/**
-	 * 获取排序属性Iterator
+	 * 获取排序字符串
 	 * 
 	 * @return
 	 */
-	public Iterator<Property> iterator()
+	public String getSortString()
 	{
-		return this.properties.iterator();
+		if (!this.orders.isEmpty())
+		{
+			Set<String> orderFields = new HashSet<>(this.orders.size());
+
+			for (Order order : orders)
+			{
+				String orderField = order.getProperty() + " " + order.getDirection().getValue();
+				orderFields.add(orderField);
+			}
+
+			return StringUtils.join(orderFields, ",");
+		}
+
+		return null;
+	}
+
+	/**
+	 * 创建Sort
+	 * 
+	 * @param direction
+	 * @param properties
+	 * @return
+	 */
+	public static Sort create(Direction direction, String... properties)
+	{
+		return new Sort(direction, properties);
 	}
 
 	/**
@@ -102,10 +125,9 @@ public class Sort implements Iterable<Sort.Property>, Serializable
 
 		Sort that = (Sort) obj;
 
-		boolean orderEqual = this.order.equals(that.order);
-		boolean propertiesEqual = this.properties.equals(that.properties);
+		boolean ordersEqual = this.orders.equals(that.orders);
 
-		return orderEqual && propertiesEqual;
+		return ordersEqual;
 	}
 
 	/**
@@ -118,21 +140,20 @@ public class Sort implements Iterable<Sort.Property>, Serializable
 	{
 		int result = 17;
 
-		result = 31 * result + order.hashCode();
-		result = 31 * result + properties.hashCode();
+		result = 31 * result + orders.hashCode();
 
 		return result;
 	}
 
 	/**
-	 * 属性类
+	 * 排序类
 	 * 
 	 * @version Sort
 	 */
-	public static class Property
+	public static class Order
 	{
 		// 排序
-		private Direction order;
+		private Direction direction;
 
 		// 属性
 		private String property;
@@ -140,17 +161,17 @@ public class Sort implements Iterable<Sort.Property>, Serializable
 		/**
 		 * 构造函数
 		 * 
-		 * @param order
+		 * @param direction
 		 * @param property
 		 */
-		public Property(Direction order, String property)
+		public Order(Direction direction, String property)
 		{
 			if (property == null || "".equals(property.trim()))
 			{
 				throw new IllegalArgumentException("Property must not null or empty!");
 			}
 
-			this.order = order == null ? DEFAULT_DIRECTION : order;
+			this.direction = direction == null ? DEFAULT_DIRECTION : direction;
 			this.property = property;
 		}
 
@@ -159,7 +180,7 @@ public class Sort implements Iterable<Sort.Property>, Serializable
 		 * 
 		 * @param property
 		 */
-		public Property(String property)
+		public Order(String property)
 		{
 			this(DEFAULT_DIRECTION, property);
 		}
@@ -169,9 +190,9 @@ public class Sort implements Iterable<Sort.Property>, Serializable
 		 * 
 		 * @return
 		 */
-		public Direction getOrder()
+		public Direction getDirection()
 		{
-			return order;
+			return direction;
 		}
 
 		/**
@@ -179,40 +200,9 @@ public class Sort implements Iterable<Sort.Property>, Serializable
 		 * 
 		 * @return
 		 */
-		public String getName()
+		public String getProperty()
 		{
 			return property;
-		}
-
-		/**
-		 * 是否升序
-		 * 
-		 * @return
-		 */
-		public boolean isAscending()
-		{
-			return this.order.equals(Direction.ASC);
-		}
-
-		/**
-		 * 
-		 * @param order
-		 * @return
-		 */
-		public Property with(Direction order)
-		{
-			return new Property(order, this.property);
-		}
-
-		/**
-		 * 
-		 * 
-		 * @param properties
-		 * @return
-		 */
-		public Sort withProperties(String... properties)
-		{
-			return new Sort(this.order, properties);
 		}
 
 		/**
@@ -225,7 +215,7 @@ public class Sort implements Iterable<Sort.Property>, Serializable
 		{
 			int result = 17;
 
-			result = 31 * result + order.hashCode();
+			result = 31 * result + direction.hashCode();
 			result = 31 * result + property.hashCode();
 
 			return result;
@@ -245,14 +235,73 @@ public class Sort implements Iterable<Sort.Property>, Serializable
 				return true;
 			}
 
-			if (!(obj instanceof Property))
+			if (!(obj instanceof Order))
 			{
 				return false;
 			}
 
-			Property that = (Property) obj;
+			Order that = (Order) obj;
 
-			return this.order.equals(that.order) && this.property.equals(that.property);
+			return this.direction.equals(that.direction) && this.property.equals(that.property);
 		}
 	}
+
+	/**
+	 * 排序枚举类
+	 * 
+	 * @version
+	 */
+	public enum Direction
+	{
+	    // 升序
+		ASC("asc"),
+	    // 降序
+		DESC("desc");
+
+		/**
+		 * 排序值
+		 */
+		private String value;
+
+		/**
+		 * 构造函数
+		 * 
+		 * @param value
+		 */
+		private Direction(String value)
+		{
+			this.value = value;
+		}
+
+		/**
+		 * 获取排序值
+		 * 
+		 * @return
+		 */
+		public String getValue()
+		{
+			return value;
+		}
+
+		/**
+		 * 根据参数返回一个枚举对象
+		 * 
+		 * @param value
+		 * @return
+		 */
+		public static Direction fromString(String value)
+		{
+			for (Direction direction : Direction.values())
+			{
+				if (direction.getValue().equalsIgnoreCase(value))
+				{
+					return direction;
+				}
+			}
+
+			throw new IllegalArgumentException(
+			        String.format("Invalid value '%s' for orders given! Has to be either 'desc' or 'asc'.", value));
+		}
+	}
+
 }
