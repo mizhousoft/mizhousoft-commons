@@ -30,6 +30,9 @@ public class JSTreeNode
 	// 节点状态
 	private JSTreeNodeState state = new JSTreeNodeState();
 
+	// 扩展数据
+	private String extra;
+
 	/**
 	 * 获取id
 	 * 
@@ -168,5 +171,25 @@ public class JSTreeNode
 	public void setState(JSTreeNodeState state)
 	{
 		this.state = state;
+	}
+
+	/**
+	 * 获取extra
+	 * 
+	 * @return
+	 */
+	public String getExtra()
+	{
+		return extra;
+	}
+
+	/**
+	 * 设置extra
+	 * 
+	 * @param extra
+	 */
+	public void setExtra(String extra)
+	{
+		this.extra = extra;
 	}
 }
