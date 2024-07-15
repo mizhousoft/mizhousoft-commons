@@ -82,6 +82,33 @@ public abstract class JSONUtils
 	/**
 	 * 解析字符串成对象
 	 * 
+	 * @param <T>
+	 * @param input
+	 * @param clazz
+	 * @return
+	 */
+	public static <T> T parseQuietly(String input, Class<T> clazz)
+	{
+		if (StringUtils.isBlank(input))
+		{
+			return null;
+		}
+
+		try
+		{
+			T t = DESERI_OBJECT_MAPPER.readValue(input, clazz);
+
+			return t;
+		}
+		catch (IOException e)
+		{
+			throw new IllegalArgumentException("String deserialize to Object failed.", e);
+		}
+	}
+
+	/**
+	 * 解析字符串成对象
+	 * 
 	 * @param input
 	 * @param valueTypeRef
 	 * @return
@@ -125,6 +152,33 @@ public abstract class JSONUtils
 	}
 
 	/**
+	 * 解析字符串成对象
+	 * 
+	 * @param <T>
+	 * @param input
+	 * @param valueTypeRef
+	 * @return
+	 */
+	public static <T> T parseQuietly(String input, TypeReference<T> valueTypeRef)
+	{
+		if (StringUtils.isBlank(input))
+		{
+			return null;
+		}
+
+		try
+		{
+			T t = DESERI_OBJECT_MAPPER.readValue(input, valueTypeRef);
+
+			return t;
+		}
+		catch (IOException e)
+		{
+			throw new IllegalArgumentException("String deserialize to Object failed.", e);
+		}
+	}
+
+	/**
 	 * 对象序列化成字符串
 	 * 
 	 * @param value
@@ -149,6 +203,38 @@ public abstract class JSONUtils
 		}
 	}
 
+	/**
+	 * 对象序列化成字符串
+	 * 
+	 * @param value
+	 * @return
+	 */
+	public static String toJSONStringQuietly(Object value)
+	{
+		if (null == value)
+		{
+			return null;
+		}
+
+		try
+		{
+			String data = SERI_OBJECT_MAPPER.writeValueAsString(value);
+
+			return data;
+		}
+		catch (IOException e)
+		{
+			throw new IllegalArgumentException("Object serialize to a string failed.", e);
+		}
+	}
+
+	/**
+	 * 对象序列化成格式化的字符串
+	 * 
+	 * @param value
+	 * @return
+	 * @throws JSONException
+	 */
 	public static String toPrettyJSONString(Object value) throws JSONException
 	{
 		if (null == value)
