@@ -156,4 +156,14 @@ public abstract class LocalDateUtils
 	{
 		return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
 	}
+
+	public static LocalDate toLocalDate(long second)
+	{
+		if (0 == second)
+		{
+			return null;
+		}
+
+		return LocalDateTimeUtils.toLocalDateTime(second).toLocalDate();
+	}
 }
