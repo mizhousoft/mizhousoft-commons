@@ -1,8 +1,10 @@
 package com.mizhousoft.commons.crypto.generator;
 
-import org.bouncycastle.crypto.digests.SHA256Digest;
-import org.bouncycastle.crypto.generators.PKCS5S2ParametersGenerator;
-import org.bouncycastle.crypto.params.KeyParameter;
+import java.security.spec.KeySpec;
+
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 
 import com.mizhousoft.commons.crypto.CryptoException;
 
@@ -13,6 +15,8 @@ import com.mizhousoft.commons.crypto.CryptoException;
  */
 public final class PBEGenerator
 {
+	private static final String ALGORITHM_NAME = "PBKDF2WithHmacSHA256";
+
 	/**
 	 * 构造函数
 	 *
@@ -32,7 +36,7 @@ public final class PBEGenerator
 	 * @return
 	 * @throws CryptoException
 	 */
-	public static byte[] deriveKey(int size, byte[] pass, byte[] saltBytes, int iterations) throws CryptoException
+	public static byte[] deriveKey(int size, char[] pass, byte[] saltBytes, int iterations) throws CryptoException
 	{
 		if (size < 8)
 		{
@@ -62,13 +66,16 @@ public final class PBEGenerator
 	 * @return
 	 * @throws CryptoException
 	 */
-	private static byte[] doDeriveKey(int size, byte[] pass, byte[] saltBytes, int iterations) throws CryptoException
+	private static byte[] doDeriveKey(int size, char[] pass, byte[] saltBytes, int iterations) throws CryptoException
 	{
 		try
 		{
-			PKCS5S2ParametersGenerator gen = new PKCS5S2ParametersGenerator(new SHA256Digest());
-			gen.init(pass, saltBytes, iterations);
-			byte[] derivedKey = ((KeyParameter) gen.generateDerivedParameters(size * 8)).getKey();
+			SecretKeyFactory factory = SecretKeyFactory.getInstance(ALGORITHM_NAME);
+			KeySpec spec = new PBEKeySpec(pass, saltBytes, iterations, size * 8);
+			SecretKey key = factory.generateSecret(spec);
+
+			byte[] derivedKey = key.getEncoded();
+
 			return derivedKey;
 		}
 		catch (Exception e)

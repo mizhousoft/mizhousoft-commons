@@ -26,7 +26,7 @@ public final class PBESecretKeyGenerator
 	 * @return
 	 * @throws CryptoException
 	 */
-	public static byte[] deriveKey(int size, byte[] pass, byte[] saltBytes) throws CryptoException
+	public static byte[] deriveKey(int size, char[] pass, byte[] saltBytes) throws CryptoException
 	{
 		return PBEGenerator.deriveKey(size, pass, saltBytes, DEFAULT_ITERATION);
 	}

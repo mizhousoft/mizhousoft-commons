@@ -53,7 +53,7 @@ public final class PBEPasswdGenerator
 			throw new CryptoException("Salt length is illegal.");
 		}
 
-		byte[] passBytes = rawPwd.getBytes(CharEncoding.UTF8);
+		char[] passBytes = rawPwd.toCharArray();
 		byte[] saltBytes = salt.getBytes(CharEncoding.UTF8);
 		int iterations = DEFAULT_ITERATION;
 
