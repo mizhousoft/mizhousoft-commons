@@ -44,11 +44,23 @@ public abstract class StringUtils
 		return data;
 	}
 
+	/**
+	 * 整数拼接成字符串
+	 * 
+	 * @param list
+	 * @return
+	 */
 	public static String join(Set<Integer> list)
 	{
 		return org.apache.commons.lang3.StringUtils.join(list, SEPARATOR);
 	}
 
+	/**
+	 * 字符串分割成整数集合
+	 * 
+	 * @param data
+	 * @return
+	 */
 	public static Set<Integer> splitToIntSet(String data)
 	{
 		String[] values = org.apache.commons.lang3.StringUtils.split(data, SEPARATOR);

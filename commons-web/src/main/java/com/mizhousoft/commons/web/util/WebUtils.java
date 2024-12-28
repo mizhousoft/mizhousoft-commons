@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.mizhousoft.commons.lang.CharEncoding;
+import com.mizhousoft.commons.lang.CollectionUtils;
 
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
