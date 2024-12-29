@@ -1,6 +1,7 @@
 package com.mizhousoft.commons.lang;
 
 import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -56,6 +57,67 @@ public abstract class ListUtils
 		}
 
 		return new Partition<>(list, size);
+	}
+
+	/**
+	 * 合并集合
+	 * 
+	 * @param <T>
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	public static <T> List<T> merge(final List<? extends T> a, final List<? extends T> b)
+	{
+		List<T> list = new ArrayList<>(a.size() + b.size());
+
+		list.addAll(a);
+		list.addAll(b);
+
+		return list;
+	}
+
+	/**
+	 * 合并集合
+	 * 
+	 * @param <T>
+	 * @param a
+	 * @param b
+	 * @param c
+	 * @return
+	 */
+	public static <T> List<T> merge(final List<? extends T> a, final List<? extends T> b, final List<? extends T> c)
+	{
+		List<T> list = new ArrayList<>(a.size() + b.size() + c.size());
+
+		list.addAll(a);
+		list.addAll(b);
+		list.addAll(c);
+
+		return list;
+	}
+
+	/**
+	 * 合并集合
+	 * 
+	 * @param <T>
+	 * @param a
+	 * @param b
+	 * @param c
+	 * @param d
+	 * @return
+	 */
+	public static <T> List<T> merge(final List<? extends T> a, final List<? extends T> b, final List<? extends T> c,
+	        final List<? extends T> d)
+	{
+		List<T> list = new ArrayList<>(a.size() + b.size() + c.size() + d.size());
+
+		list.addAll(a);
+		list.addAll(b);
+		list.addAll(c);
+		list.addAll(d);
+
+		return list;
 	}
 
 	/**
