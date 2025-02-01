@@ -70,7 +70,7 @@ public interface Table<R extends Object, C extends Object, V extends Object>
 	 * 
 	 * @param table
 	 */
-	void putAll(Table<? extends R, ? extends C, ? extends V> table);
+	void putAll(Table<R, C, V> table);
 
 	/**
 	 * 移除值

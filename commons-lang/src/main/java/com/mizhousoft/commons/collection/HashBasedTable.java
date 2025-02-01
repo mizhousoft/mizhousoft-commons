@@ -42,7 +42,7 @@ public class HashBasedTable<R, C, V> extends AbstractTable<R, C, V>
 	 * @param table
 	 * @return
 	 */
-	public static <R, C, V> HashBasedTable<R, C, V> create(Table<? extends R, ? extends C, ? extends V> table)
+	public static <R, C, V> HashBasedTable<R, C, V> create(Table<R, C, V> table)
 	{
 		HashBasedTable<R, C, V> result = create(10);
 		result.putAll(table);

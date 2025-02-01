@@ -134,13 +134,13 @@ abstract class AbstractTable<R extends Object, C extends Object, V extends Objec
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void putAll(Table<? extends R, ? extends C, ? extends V> table)
+	public void putAll(Table<R, C, V> table)
 	{
 		Iterator<? extends R> keyIter = table.rowKeySet().iterator();
 		while (keyIter.hasNext())
 		{
 			R rowKey = (R) keyIter.next();
-			Map<C, V> row = row(rowKey);
+			Map<C, V> row = table.row(rowKey);
 
 			Iterator<Entry<C, V>> iter = row.entrySet().iterator();
 			while (iter.hasNext())
