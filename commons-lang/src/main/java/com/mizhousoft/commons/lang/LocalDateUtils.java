@@ -166,4 +166,19 @@ public abstract class LocalDateUtils
 
 		return LocalDateTimeUtils.toLocalDateTime(second).toLocalDate();
 	}
+
+	/**
+	 * 两组日期是否重叠
+	 * 
+	 * @param start1
+	 * @param end1
+	 * @param start2
+	 * @param end2
+	 * @return
+	 */
+	public static boolean isOverlapping(LocalDate start1, LocalDate end1, LocalDate start2, LocalDate end2)
+	{
+		return (start1.isBefore(end2) || start1.isEqual(end2)) && (end1.isAfter(start2) || end1.isEqual(start2));
+	}
+
 }
