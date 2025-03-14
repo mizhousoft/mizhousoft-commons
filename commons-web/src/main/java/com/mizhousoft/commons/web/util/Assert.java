@@ -1,5 +1,6 @@
 package com.mizhousoft.commons.web.util;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -158,7 +159,7 @@ public abstract class Assert
 		}
 	}
 
-	public static void min(String fieldName, long value, int min, String errorCode) throws AssertionException
+	public static void min(String fieldName, long value, long min, String errorCode) throws AssertionException
 	{
 		if (value < min)
 		{
@@ -169,9 +170,30 @@ public abstract class Assert
 		}
 	}
 
-	public static void max(String fieldName, long value, int max, String errorCode) throws AssertionException
+	public static void max(String fieldName, long value, long max, String errorCode) throws AssertionException
 	{
 		if (value > max)
+		{
+			String[] params = { String.valueOf(max) };
+
+			throw new AssertionException(errorCode, params, fieldName + " is larger than the maximum " + max + ", value is " + value + '.');
+		}
+	}
+
+	public static void min(String fieldName, BigDecimal value, BigDecimal min, String errorCode) throws AssertionException
+	{
+		if (value.compareTo(min) == -1)
+		{
+			String[] params = { String.valueOf(min) };
+
+			throw new AssertionException(errorCode, params,
+			        fieldName + " is smaller than the maximum " + min + ", value is " + value + '.');
+		}
+	}
+
+	public static void max(String fieldName, BigDecimal value, BigDecimal max, String errorCode) throws AssertionException
+	{
+		if (value.compareTo(max) == 1)
 		{
 			String[] params = { String.valueOf(max) };
 
@@ -305,7 +327,7 @@ public abstract class Assert
 		}
 	}
 
-	public static void min(long value, int min, String message) throws AssertionException
+	public static void min(long value, long min, String message) throws AssertionException
 	{
 		if (value < min)
 		{
@@ -313,7 +335,7 @@ public abstract class Assert
 		}
 	}
 
-	public static void max(long value, int max, String message) throws AssertionException
+	public static void max(long value, long max, String message) throws AssertionException
 	{
 		if (value > max)
 		{
