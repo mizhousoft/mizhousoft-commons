@@ -12,7 +12,7 @@ import com.mizhousoft.commons.data.domain.PageRequest;
  *
  * @version
  */
-public interface PageableMapper<T, ID extends Serializable> extends CrudMapper<T, ID>
+public interface PageableMapper<T, R, ID extends Serializable> extends CrudMapper<T, ID>
 {
 	/**
 	 * 统计
@@ -29,5 +29,5 @@ public interface PageableMapper<T, ID extends Serializable> extends CrudMapper<T
 	 * @param request
 	 * @return
 	 */
-	List<T> findPageData(@Param("rowOffset") long rowOffset, @Param("request") PageRequest request);
+	List<R> findPageData(@Param("rowOffset") long rowOffset, @Param("request") PageRequest request);
 }
