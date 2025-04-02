@@ -51,10 +51,6 @@
 					<artifactId>ant-launcher</artifactId>
 					<groupId>org.apache.ant</groupId>
 				</exclusion>
-				<exclusion>
-					<groupId>com.sun</groupId>
-					<artifactId>tools</artifactId>
-				</exclusion>
 			</exclusions>
 			<scope>provided</scope>
 		</dependency>
