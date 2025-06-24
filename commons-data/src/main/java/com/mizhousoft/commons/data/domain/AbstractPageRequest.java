@@ -88,7 +88,7 @@ public abstract class AbstractPageRequest implements Pageable, Serializable
 		{
 			pageSize = PaginationConstants.DEFAULT_PAGE_SIZE;
 		}
-		
+
 		this.pageSize = pageSize;
 	}
 

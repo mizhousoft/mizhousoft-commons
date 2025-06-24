@@ -1,5 +1,6 @@
 package com.mizhousoft.commons.data.util;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.mizhousoft.commons.data.domain.Page;
@@ -24,6 +25,19 @@ public abstract class PageBuilder
 	public static <T> Page<T> build(List<T> data, Pageable pageable, long totalNumber)
 	{
 		Page<T> page = new PageImpl<T>(data, pageable, totalNumber);
+		return page;
+	}
+
+	/**
+	 * 构建空分页
+	 * 
+	 * @param <T>
+	 * @param pageable
+	 * @return
+	 */
+	public static <T> Page<T> buildEmpty(Pageable pageable)
+	{
+		Page<T> page = new PageImpl<T>(Collections.emptyList(), pageable, 0);
 		return page;
 	}
 }
