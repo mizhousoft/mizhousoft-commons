@@ -76,6 +76,14 @@ public interface Table<R extends Object, C extends Object, V extends Object>
 	 * 移除值
 	 * 
 	 * @param rowKey
+	 * @return
+	 */
+	Map<C, V> remove(Object rowKey);
+
+	/**
+	 * 移除值
+	 * 
+	 * @param rowKey
 	 * @param columnKey
 	 * @return
 	 */

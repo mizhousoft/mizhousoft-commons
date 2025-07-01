@@ -156,6 +156,32 @@ abstract class AbstractTable<R extends Object, C extends Object, V extends Objec
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Map<C, V> remove(Object rowKey)
+	{
+		if (rowKey == null)
+		{
+			return null;
+		}
+
+		Map<C, V> row = backingMap.get(rowKey);
+		if (null == row)
+		{
+			return null;
+		}
+
+		Set<C> keys = row.keySet();
+		for (C key : keys)
+		{
+			row.remove(key);
+		}
+
+		return row;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public V remove(Object rowKey, Object columnKey)
 	{
 		if ((rowKey == null) || (columnKey == null))
