@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 import com.mizhousoft.commons.lang.CharEncoding;
 import com.mizhousoft.commons.web.AssertionException;
@@ -80,7 +80,7 @@ public abstract class Assert
 
 	public static void notEquals(String fieldName, String actualValue, String expectedValue, String errorCode) throws AssertionException
 	{
-		if (!StringUtils.equals(actualValue, expectedValue))
+		if (!Strings.CS.equals(actualValue, expectedValue))
 		{
 			throw new AssertionException(errorCode, fieldName + " is not equal to the expected value.");
 		}
@@ -261,7 +261,7 @@ public abstract class Assert
 
 	public static void notEquals(String actualValue, String expectedValue, String message) throws AssertionException
 	{
-		if (!StringUtils.equals(actualValue, expectedValue))
+		if (!Strings.CS.equals(actualValue, expectedValue))
 		{
 			throw new AssertionException(message);
 		}

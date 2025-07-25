@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -187,7 +188,7 @@ public abstract class WebUtils
 	{
 		String contextPath = getContextPath(request);
 		String requestUri = getRequestUri(request);
-		if (StringUtils.startsWithIgnoreCase(requestUri, contextPath))
+		if (Strings.CI.startsWith(requestUri, contextPath))
 		{
 			// Normal case: URI contains context path.
 			String path = requestUri.substring(contextPath.length());

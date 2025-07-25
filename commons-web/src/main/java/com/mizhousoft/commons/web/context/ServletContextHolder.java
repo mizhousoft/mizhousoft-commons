@@ -2,7 +2,7 @@ package com.mizhousoft.commons.web.context;
 
 import java.io.File;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 /**
  * ServletContext工具类
@@ -32,14 +32,14 @@ public abstract class ServletContextHolder
 		String path = InnerServletContextHolder.getServletContext().getRealPath("/");
 		if (withEndSeparator)
 		{
-			if (!StringUtils.endsWith(path, File.separator))
+			if (!Strings.CS.endsWith(path, File.separator))
 			{
 				path = path + File.separator;
 			}
 		}
 		else
 		{
-			if (StringUtils.endsWith(path, File.separator))
+			if (Strings.CS.endsWith(path, File.separator))
 			{
 				path = path.substring(0, path.length() - 1);
 			}
