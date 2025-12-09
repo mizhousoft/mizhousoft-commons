@@ -6,8 +6,9 @@ import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedJdbcTypes;
 import org.apache.ibatis.type.MappedTypes;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.mizhousoft.commons.mapper.typehandler.SetTypeHandler;
+
+import tools.jackson.core.type.TypeReference;
 
 /**
  * 类型处理器

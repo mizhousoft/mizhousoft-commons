@@ -1,6 +1,5 @@
 package com.mizhousoft.commons.json;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -9,16 +8,18 @@ import java.util.TimeZone;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.Module;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.DeserializationFeature;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ext.javatime.deser.LocalDateDeserializer;
+import tools.jackson.databind.ext.javatime.deser.LocalDateTimeDeserializer;
+import tools.jackson.databind.ext.javatime.ser.LocalDateSerializer;
+import tools.jackson.databind.ext.javatime.ser.LocalDateTimeSerializer;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.module.SimpleModule;
 
 /**
  * JSONUtils
@@ -27,18 +28,25 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
  */
 public abstract class JSONUtils
 {
-	// ObjectMapper
-	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+	private static final String dateFormat = "yyyy-MM-dd";
 
-	static
-	{
-		// 序列化忽略空字符
-		OBJECT_MAPPER.setSerializationInclusion(Include.NON_NULL);
-		// 反序列化忽略未知字段
-		OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+	private static final String dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 
-		registerDefaultModule();
-	}
+	private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(dateFormat);
+
+	private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateTimeFormat);
+
+	private static final ObjectMapper OBJECT_MAPPER = JsonMapper.builder()
+	        .changeDefaultPropertyInclusion(incl -> incl.withValueInclusion(JsonInclude.Include.NON_NULL))
+	        .changeDefaultPropertyInclusion(incl -> incl.withContentInclusion(JsonInclude.Include.NON_NULL))
+	        .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+	        .defaultDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))
+	        .defaultTimeZone(TimeZone.getTimeZone("GMT+8"))
+	        .addModule(new SimpleModule().addDeserializer(LocalDate.class, new LocalDateDeserializer(dateFormatter))
+	                .addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(dateTimeFormatter))
+	                .addSerializer(new LocalDateSerializer(dateFormatter))
+	                .addSerializer(new LocalDateTimeSerializer(dateTimeFormatter)))
+	        .build();
 
 	/**
 	 * 解析字符串成对象
@@ -65,7 +73,7 @@ public abstract class JSONUtils
 
 			return t;
 		}
-		catch (IOException e)
+		catch (JacksonException e)
 		{
 			throw new JSONException("String deserialize to Object failed.", e);
 		}
@@ -106,7 +114,7 @@ public abstract class JSONUtils
 
 			return t;
 		}
-		catch (IOException e)
+		catch (JacksonException e)
 		{
 			throw new IllegalArgumentException("String deserialize to Object failed.", e);
 		}
@@ -137,7 +145,7 @@ public abstract class JSONUtils
 
 			return t;
 		}
-		catch (IOException e)
+		catch (JacksonException e)
 		{
 			throw new JSONException("String deserialize to Object failed.", e);
 		}
@@ -178,7 +186,7 @@ public abstract class JSONUtils
 
 			return t;
 		}
-		catch (IOException e)
+		catch (JacksonException e)
 		{
 			throw new IllegalArgumentException("String deserialize to Object failed.", e);
 		}
@@ -203,7 +211,7 @@ public abstract class JSONUtils
 			String data = OBJECT_MAPPER.writeValueAsString(value);
 			return data;
 		}
-		catch (IOException e)
+		catch (JacksonException e)
 		{
 			throw new JSONException("Object serialize to a string failed.", e);
 		}
@@ -228,7 +236,7 @@ public abstract class JSONUtils
 
 			return data;
 		}
-		catch (IOException e)
+		catch (JacksonException e)
 		{
 			throw new IllegalArgumentException("Object serialize to a string failed.", e);
 		}
@@ -253,41 +261,10 @@ public abstract class JSONUtils
 			String data = OBJECT_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(value);
 			return data;
 		}
-		catch (IOException e)
+		catch (JacksonException e)
 		{
 			throw new JSONException("Object serialize to a string failed.", e);
 		}
 	}
 
-	/**
-	 * 注册模块
-	 * 
-	 * @param module
-	 */
-	public static void registerModule(Module module)
-	{
-		OBJECT_MAPPER.registerModule(module);
-	}
-
-	/**
-	 * 注册默认的模块
-	 */
-	private static void registerDefaultModule()
-	{
-		String dateFormat = "yyyy-MM-dd";
-		String dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
-
-		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(dateFormat);
-		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateTimeFormat);
-
-		JavaTimeModule module = new JavaTimeModule();
-		module.addSerializer(new LocalDateTimeSerializer(dateTimeFormatter));
-		module.addSerializer(new LocalDateSerializer(dateFormatter));
-		module.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(dateTimeFormatter));
-		module.addDeserializer(LocalDate.class, new LocalDateDeserializer(dateFormatter));
-
-		OBJECT_MAPPER.registerModule(module);
-		OBJECT_MAPPER.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-		OBJECT_MAPPER.setDateFormat(new SimpleDateFormat(dateTimeFormat));
-	}
 }
