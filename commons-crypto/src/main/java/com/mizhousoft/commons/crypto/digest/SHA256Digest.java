@@ -3,6 +3,7 @@ package com.mizhousoft.commons.crypto.digest;
 import java.security.MessageDigest;
 
 import com.mizhousoft.commons.crypto.CryptoException;
+import com.mizhousoft.commons.lang.HexUtils;
 
 /**
  * SHA256HASH算法
@@ -45,5 +46,19 @@ public final class SHA256Digest
 		{
 			throw new CryptoException("SHA256 digest hash failed.", e);
 		}
+	}
+
+	/**
+	 * hash转为hex字符串
+	 * 
+	 * @param dataBytes
+	 * @return
+	 * @throws CryptoException
+	 */
+	public static String hashHex(byte[] dataBytes) throws CryptoException
+	{
+		byte[] d = hash(dataBytes);
+
+		return HexUtils.encodeHexString(d, true);
 	}
 }
