@@ -1,5 +1,6 @@
 package com.mizhousoft.commons.web.antd;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public class Steps
 	/**
 	 * 步骤项
 	 */
-	private List<StepItem> items;
+	private List<StepItem> items = new ArrayList<>(5);
 
 	/**
 	 * 步骤项
@@ -48,6 +49,19 @@ public class Steps
 		 * 是否禁用
 		 */
 		private Boolean disabled;
+
+		/**
+		 * 构造函数
+		 *
+		 * @param title
+		 * @param subTitle
+		 */
+		public StepItem(String title, String subTitle)
+		{
+			super();
+			this.title = title;
+			this.subTitle = subTitle;
+		}
 
 		/**
 		 * 获取title
@@ -148,6 +162,16 @@ public class Steps
 		{
 			this.disabled = disabled;
 		}
+	}
+
+	/**
+	 * 增加项
+	 * 
+	 * @param item
+	 */
+	public void addItem(StepItem item)
+	{
+		items.add(item);
 	}
 
 	/**
