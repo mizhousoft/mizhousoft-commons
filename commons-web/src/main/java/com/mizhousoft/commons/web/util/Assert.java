@@ -73,7 +73,8 @@ public abstract class Assert
 	{
 		if (actualValue != expectedValue)
 		{
-			throw new AssertionException(errorCode,
+			throw new AssertionException(
+			        errorCode,
 			        fieldName + " is not equal to the expected value, actual value is " + actualValue + '.');
 		}
 	}
@@ -122,7 +123,9 @@ public abstract class Assert
 		{
 			String[] params = { String.valueOf(min), String.valueOf(max) };
 
-			throw new AssertionException(errorCode, params,
+			throw new AssertionException(
+			        errorCode,
+			        params,
 			        fieldName + " length is not in the " + min + " to " + max + " range, length is " + data.length() + '.');
 		}
 	}
@@ -133,7 +136,9 @@ public abstract class Assert
 		{
 			String[] params = { String.valueOf(min), String.valueOf(max) };
 
-			throw new AssertionException(errorCode, params,
+			throw new AssertionException(
+			        errorCode,
+			        params,
 			        fieldName + " is not in the " + min + " to " + max + " range, value is " + value + '.');
 		}
 	}
@@ -144,7 +149,9 @@ public abstract class Assert
 		{
 			String[] params = { String.valueOf(min) };
 
-			throw new AssertionException(errorCode, params,
+			throw new AssertionException(
+			        errorCode,
+			        params,
 			        fieldName + " is smaller than the maximum " + min + ", value is " + value + '.');
 		}
 	}
@@ -165,7 +172,9 @@ public abstract class Assert
 		{
 			String[] params = { String.valueOf(min) };
 
-			throw new AssertionException(errorCode, params,
+			throw new AssertionException(
+			        errorCode,
+			        params,
 			        fieldName + " is smaller than the maximum " + min + ", value is " + value + '.');
 		}
 	}
@@ -186,7 +195,9 @@ public abstract class Assert
 		{
 			String[] params = { String.valueOf(min) };
 
-			throw new AssertionException(errorCode, params,
+			throw new AssertionException(
+			        errorCode,
+			        params,
 			        fieldName + " is smaller than the maximum " + min + ", value is " + value + '.');
 		}
 	}
