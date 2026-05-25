@@ -9,11 +9,20 @@ public class NestedException extends Exception
 {
 	private static final long serialVersionUID = -2292661666283627052L;
 
-	// 错误码
+	/**
+	 * 错误码
+	 */
 	protected String errorCode;
 
-	// 错误码参数
+	/**
+	 * 错误码参数
+	 */
 	protected String[] codeParams;
+
+	/**
+	 * 扩展
+	 */
+	protected String extra;
 
 	/**
 	 * 构造函数
@@ -104,5 +113,25 @@ public class NestedException extends Exception
 	public String[] getCodeParams()
 	{
 		return codeParams;
+	}
+
+	/**
+	 * 获取extra
+	 * 
+	 * @return
+	 */
+	public String getExtra()
+	{
+		return extra;
+	}
+
+	/**
+	 * 设置extra
+	 * 
+	 * @param extra
+	 */
+	public void setExtra(String extra)
+	{
+		this.extra = extra;
 	}
 }
